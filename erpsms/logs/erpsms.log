@@ -1,0 +1,40 @@
+[28/Feb/2016 13:54:03] DEBUG [django.db.backends:89] (0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+[28/Feb/2016 13:54:03] DEBUG [django.db.backends:89] (0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+[28/Feb/2016 13:54:03] DEBUG [django.db.backends:89] (0.000) SHOW FULL TABLES; args=None
+[28/Feb/2016 13:54:03] DEBUG [django.db.backends:89] (0.000) SELECT `django_migrations`.`app`, `django_migrations`.`name` FROM `django_migrations`; args=()
+[28/Feb/2016 13:54:23] WARNING [django.request:170] Not Found: /favicon.ico
+[28/Feb/2016 13:55:46] DEBUG [django.db.backends:89] (0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+[28/Feb/2016 13:55:46] DEBUG [django.db.backends:89] (0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+[28/Feb/2016 13:55:46] DEBUG [django.db.backends:89] (0.000) SHOW FULL TABLES; args=None
+[28/Feb/2016 13:55:46] DEBUG [django.db.backends:89] (0.000) SELECT `django_migrations`.`app`, `django_migrations`.`name` FROM `django_migrations`; args=()
+[28/Feb/2016 13:58:12] DEBUG [django.db.backends:89] (0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+[28/Feb/2016 13:58:12] DEBUG [django.db.backends:89] (0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+[28/Feb/2016 13:58:12] DEBUG [django.db.backends:89] (0.000) SHOW FULL TABLES; args=None
+[28/Feb/2016 13:58:12] DEBUG [django.db.backends:89] (0.000) SELECT `django_migrations`.`app`, `django_migrations`.`name` FROM `django_migrations`; args=()
+[28/Feb/2016 13:58:18] DEBUG [django.db.backends:89] (0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+[28/Feb/2016 13:58:18] DEBUG [django.db.backends:89] (0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+[28/Feb/2016 13:58:18] DEBUG [django.db.backends:89] (0.000) SHOW FULL TABLES; args=None
+[28/Feb/2016 13:58:18] DEBUG [django.db.backends:89] (0.000) SELECT `django_migrations`.`app`, `django_migrations`.`name` FROM `django_migrations`; args=()
+[28/Feb/2016 13:58:36] DEBUG [erpsms:34] this is a debug message!
+[28/Feb/2016 13:58:57] DEBUG [django.db.backends:89] (0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+[28/Feb/2016 13:58:57] DEBUG [django.db.backends:89] (0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+[28/Feb/2016 13:58:57] DEBUG [django.db.backends:89] (0.000) SHOW FULL TABLES; args=None
+[28/Feb/2016 13:58:57] DEBUG [django.db.backends:89] (0.000) SELECT `django_migrations`.`app`, `django_migrations`.`name` FROM `django_migrations`; args=()
+[28/Feb/2016 13:59:12] ERROR [erpsms:34] this is a debug message!
+[28/Feb/2016 14:04:55] DEBUG [django.db.backends:89] (0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+[28/Feb/2016 14:04:55] DEBUG [django.db.backends:89] (0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+[28/Feb/2016 14:04:55] DEBUG [django.db.backends:89] (0.000) SHOW FULL TABLES; args=None
+[28/Feb/2016 14:04:55] DEBUG [django.db.backends:89] (0.000) SELECT `django_migrations`.`app`, `django_migrations`.`name` FROM `django_migrations`; args=()
+[28/Feb/2016 14:05:08] DEBUG [erpsms:35] this is a debug message!
+[28/Feb/2016 14:05:33] DEBUG [django.db.backends:89] (0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+[28/Feb/2016 14:05:33] DEBUG [django.db.backends:89] (0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+[28/Feb/2016 14:05:33] DEBUG [django.db.backends:89] (0.000) SHOW FULL TABLES; args=None
+[28/Feb/2016 14:05:33] DEBUG [django.db.backends:89] (0.000) SELECT `django_migrations`.`app`, `django_migrations`.`name` FROM `django_migrations`; args=()
+[28/Feb/2016 14:05:37] DEBUG [django.db.backends:89] (0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+[28/Feb/2016 14:05:37] DEBUG [django.db.backends:89] (0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+[28/Feb/2016 14:05:37] DEBUG [django.db.backends:89] (0.000) SHOW FULL TABLES; args=None
+[28/Feb/2016 14:05:37] DEBUG [django.db.backends:89] (0.000) SELECT `django_migrations`.`app`, `django_migrations`.`name` FROM `django_migrations`; args=()
+[28/Feb/2016 14:05:47] DEBUG [django.db.backends:89] (0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+[28/Feb/2016 14:05:47] DEBUG [django.db.backends:89] (0.000) SET SQL_AUTO_IS_NULL = 0; args=None
+[28/Feb/2016 14:05:47] DEBUG [django.db.backends:89] (0.000) SHOW FULL TABLES; args=None
+[28/Feb/2016 14:05:47] DEBUG [django.db.backends:89] (0.000) SELECT `django_migrations`.`app`, `django_migrations`.`name` FROM `django_migrations`; args=()
