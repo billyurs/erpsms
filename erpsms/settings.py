@@ -60,7 +60,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
-ROOT_URLCONF = 'urls'
+ROOT_URLCONF = 'erpsms.urls'
 
 WSGI_APPLICATION = 'wsgi.application'
 
@@ -70,11 +70,11 @@ WSGI_APPLICATION = 'wsgi.application'
 
 DATABASES = {
     'default': {
-        'NAME': 'erp',
+        'NAME': 'erpforppl$erp',
         'ENGINE': 'django.db.backends.mysql',
-        'USER': 'root',
-        'PASSWORD': 'sqlsql',
-        'HOST': 'localhost',
+        'USER': 'erpforppl',
+        'PASSWORD': 'haihai1818',
+        'HOST': 'erpforppl.mysql.pythonanywhere-services.com',
         'PORT': '',
     },
 }

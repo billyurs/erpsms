@@ -9,11 +9,11 @@ STATIC_PATH = PROJECT_PATH
 urlpatterns = patterns('',
                        # Examples:
                        #url(r'^$', 'views.home', name='home'),
-                       (r'^login$', 'views.login_user'),
-                       (r'^createuser$', 'views.createuser'),
-                       (r'^$', 'views.home'),
-                       (r'^usernamesuggestion','views.usernamesuggestion'),
-                       (r'^accounts/confirm/(?P<activation_key>\w+)/', ('views.register_confirm')),
+                       (r'^login$', 'erpsms.views.login_user'),
+                       (r'^createuser$', 'erpsms.views.createuser'),
+                       (r'^$', 'erpsms.views.home'),
+                       (r'^usernamesuggestion','erpsms.views.usernamesuggestion'),
+                       (r'^accounts/confirm/(?P<activation_key>\w+)/', ('erpsms.views.register_confirm')),
                        # url(r'^blog/', include('blog.urls')),
 
                        url(r'^admin/', include(admin.site.urls)),
@@ -25,8 +25,8 @@ urlpatterns = patterns('',
                            {'document_root': STATIC_PATH + "/"}),
                        url(r'^/static/avatars/(?P<path>.*)$', 'django.views.static.serve',
                            {'document_root': STATIC_PATH + '/static/avatars/', }),
-                       url(r'', include('social_auth.urls')),
-                       url(r'^accounts/facebook/login/', 'views.facebookauth'),
+                       #url(r'', include('social_auth.urls')),
+                       url(r'^accounts/facebook/login/', 'erpsms.views.facebookauth'),
                        url(r'^allauth/accounts/', include('allauth.urls')),
 
                        #url('', include(
