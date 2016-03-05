@@ -3,12 +3,12 @@ from django.views.generic import RedirectView, TemplateView
 from django.contrib import admin
 admin.autodiscover()
 import os
+from erpsms.views import *
 from django.conf import settings
 PROJECT_PATH = os.path.abspath(os.path.dirname(__file__))
 STATIC_PATH = PROJECT_PATH
 urlpatterns = patterns('',
                        # Examples:
-                       #url(r'^$', 'views.home', name='home'),
                        (r'^login$', 'erpsms.views.login_user'),
                        (r'^createuser$', 'erpsms.views.createuser'),
                        (r'^$', 'erpsms.views.home'),
@@ -25,7 +25,7 @@ urlpatterns = patterns('',
                            {'document_root': STATIC_PATH + "/"}),
                        url(r'^/static/avatars/(?P<path>.*)$', 'django.views.static.serve',
                            {'document_root': STATIC_PATH + '/static/avatars/', }),
-                       #url(r'', include('social_auth.urls')),
+                       url(r'', include('social_auth.urls')),
                        url(r'^accounts/facebook/login/', 'erpsms.views.facebookauth'),
                        url(r'^allauth/accounts/', include('allauth.urls')),
 
