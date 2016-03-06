@@ -104,8 +104,8 @@ def usernamesuggestion(request):
 
 def createuser(request):
     username = password = ''
-    import pdb
-    pdb.set_trace()
+   # import pdb
+   # pdb.set_trace()
     if request.POST:
         username = request.POST['email']
         password = request.POST['password']
@@ -137,8 +137,8 @@ def createuser(request):
 def register_confirm(request, activation_key):
     # check if user is already logged in and if he is redirect him to some
     # other url, e.g. home
-    import pdb
-    pdb.set_trace()
+    #import pdb
+    #pdb.set_trace()
     if request.user.is_authenticated():
         HttpResponseRedirect('/home')
 
