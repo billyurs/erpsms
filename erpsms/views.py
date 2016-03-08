@@ -104,8 +104,6 @@ def usernamesuggestion(request):
 
 def createuser(request):
     username = password = ''
-    import pdb
-    pdb.set_trace()
     if request.POST:
         username = request.POST['email']
         password = request.POST['password']
