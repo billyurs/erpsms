@@ -62,7 +62,7 @@ def usernamesuggestion(request):
         email = request.POST.get('username', '')
         if email:
             usrobj = get_or_none(model=CustomUser, email=email)
-            if usrobj is None:
+            if not usrobj:
                 return HttpResponse("Username is Available", content_type="text/plain")
                 # return "Username is Available"
             else:
@@ -85,7 +85,7 @@ def usernamesuggestion(request):
                         newusername = str(replacenum)
                         usrobj = get_or_none(
                             model=CustomUser, email=email + newusername)
-                        if usrobj is None:
+                        if not usrobj:
                             returnmsg += ' Available username is ' + \
                                 email + newusername
                             return HttpResponse(returnmsg, content_type="text/plain")
@@ -99,13 +99,13 @@ def usernamesuggestion(request):
                             returnmsg += ' Available username is ' + \
                                 email + str(startno)
                             return HttpResponse(returnmsg, content_type="text/plain")
-    return render_to_response('login.html', {}, context_instance=RequestContext(request))
+    return render_to_response('login.html', context_instance=RequestContext(request))
 
 
 def createuser(request):
     username = password = ''
-   # import pdb
-   # pdb.set_trace()
+    import pdb
+    pdb.set_trace()
     if request.POST:
         username = request.POST['email']
         password = request.POST['password']
@@ -124,14 +124,8 @@ def createuser(request):
             48hours http://madhu.erpforppl.com:8000/accounts/confirm/%s" % (username, activation_key)
         send_mail(email_subject, email_body, 'erp4forppl.com',
                   [email], fail_silently=False)
-        #user = authenticate(username=username, password=password)
-        '''
-        if user is not None:
-            if user.is_active:
-                login(request, user)
-                return HttpResponseRedirect('/main/')
-        '''
-    return render_to_response('login.html', {}, context_instance=RequestContext(request))
+        return render_to_response('index.html')
+    return render_to_response('login.html')
 
 
 def register_confirm(request, activation_key):

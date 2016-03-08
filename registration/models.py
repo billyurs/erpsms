@@ -7,10 +7,13 @@ from django.utils.translation import ugettext_lazy as _
 from django.core.mail import send_mail
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.contrib.auth.models import BaseUserManager
+import logging
+logger = logging.getLogger('erpsms')
+logger_stats = logging.getLogger('erpsms_stats')
 
 def get_or_none(model, *args, **kwargs):
     try:
-        return model.objects.get(*args, **kwargs)
+        return model.objects.filter(*args, **kwargs)
     except model.DoesNotExist:
         return None
 
@@ -26,12 +29,14 @@ class CustomUserManager(BaseUserManager):
         if not email:
             raise ValueError('The given email must be set')
         email = self.normalize_email(email)
-        print(email)
+        logger.info("Email tried to create user"+email)
         #Checking user  already exist or not
-        self.model = self
-        user = get_or_none(model = self.model,email = email)
-        if user is None:
-            user = self.model(email=email,
+        username = extra_fields.get('username', '')
+        if not username:
+            username = email
+        user = get_or_none(model = CustomUser,email = email)
+        if not user:
+            user = CustomUser(email=email,
                               is_staff=is_staff, is_active=True,
                               is_superuser=is_superuser, last_login=now,
                               date_joined=now, **extra_fields)
