@@ -3,7 +3,8 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.utils.translation import ugettext_lazy as _
-
+from django.dispatch import receiver
+from django.db.models.signals import post_save
 from registration.models import CustomUser
 from registration.forms import CustomUserChangeForm, CustomUserCreationForm
 
@@ -34,3 +35,8 @@ class CustomUserAdmin(UserAdmin):
     ordering = ('email',)
 
 admin.site.register(CustomUser, CustomUserAdmin)
+
+@receiver(post_save, sender=CustomUser, weak=False)
+def user_signed_up_(**kwargs):
+    instance = kwargs['instance']
+    instance.email_user()
