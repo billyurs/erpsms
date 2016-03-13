@@ -115,6 +115,7 @@ def createuser(request):
         userobj.set_password(password)
         userobj.activation_key = activation_key
         userobj.key_expires = key_expires
+        userobj.is_active = 0
         userobj.save()
          # Send email with activation key
         email_subject = 'Account confirmation'
@@ -123,14 +124,12 @@ def createuser(request):
         send_mail(email_subject, email_body, 'erp4forppl.com',
                   [email], fail_silently=False)
         return render_to_response('index.html')
-    return render_to_response('login.html')
+    return render_to_response('login.html', context_instance=RequestContext(request))
 
 
 def register_confirm(request, activation_key):
     # check if user is already logged in and if he is redirect him to some
     # other url, e.g. home
-    #import pdb
-    #pdb.set_trace()
     if request.user.is_authenticated():
         HttpResponseRedirect('/home')
 
@@ -140,11 +139,12 @@ def register_confirm(request, activation_key):
 
     # check if the activation key has expired, if it hase then render
     # confirm_expired.html
-    if user_profile.key_expires < timezone.now():
+    if user_profile.key_expires < str(timezone.now()):
         return render_to_response('user_profile/confirm_expired.html')
     # if the key hasn't expired save user and set him as active and render
     # some template to confirm activation
     user_profile.is_active = True
     user_profile.activation_key = ''
     user_profile.save()
-    return render_to_response('login.html')
+    user_profile.email_user()
+    return render_to_response('index.html')

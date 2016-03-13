@@ -7,6 +7,8 @@ from django.utils.translation import ugettext_lazy as _
 from django.core.mail import send_mail
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.contrib.auth.models import BaseUserManager
+from allauth.account.signals import user_signed_up
+from django.dispatch import receiver
 import logging
 logger = logging.getLogger('erpsms')
 logger_stats = logging.getLogger('erpsms_stats')
@@ -97,8 +99,12 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         "Returns the short name for the user."
         return self.first_name
 
-    def email_user(self, subject, message, from_email=None):
+    def email_user(self, subject='', message='', from_email=None):
         """
         Sends an email to this User.
         """
-        send_mail(subject, message, from_email, [self.email])
+        subject = 'Thanks for joining with us'
+        message = "Test Mail madhu here"
+        from_email = 'erp4ppl@gmail.com'
+        if self.email and self.is_active:
+            send_mail(subject, message, from_email, [self.email])
