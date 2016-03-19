@@ -39,4 +39,4 @@ admin.site.register(CustomUser, CustomUserAdmin)
 @receiver(post_save, sender=CustomUser, weak=False)
 def user_signed_up_(**kwargs):
     instance = kwargs['instance']
-    instance.email_user()
+    #instance.email_user()
