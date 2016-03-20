@@ -148,17 +148,18 @@
 												Enter your email and to receive instructions
 											</p>
 
-											<form>
+											<form id="passwordresetform" method="post" action="/password_reset_req_activationkey">
+                      {% csrf_token %}
 												<fieldset>
 													<label class="block clearfix">
 														<span class="block input-icon input-icon-right">
-															<input type="email" id = "email" class="form-control" placeholder="Email" />
+															<input type="email" id = "username" name = "username" class="form-control" placeholder="Email" />
 															<i class="ace-icon fa fa-envelope"></i>
 														</span>
 													</label>
 
 													<div class="clearfix">
-														<button type="button" class="width-35 pull-right btn btn-sm btn-danger">
+														<button type="submit" class="width-35 pull-right btn btn-sm btn-danger">
 															<i class="ace-icon fa fa-lightbulb-o"></i>
 															<span class="bigger-110">Send Me!</span>
 														</button>
