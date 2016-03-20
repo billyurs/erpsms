@@ -149,32 +149,55 @@ def register_confirm(request, activation_key):
     user_profile.activation_key = ''
     user_profile.save()
     user_profile.email_user()
-    return render_to_response('index.html')
+    return render_to_response('email-confirmation.html')
 
 
-def password_reset(request):
+def password_reset_send_activation_key(request):
     import pdb
     pdb.set_trace()
     if request.POST:
         email_or_username = request.POST.get('username', '')
         user_profile = get_object_or_404(
-            CustomUser, username=email_or_username)
+            CustomUser, email=email_or_username)
         if user_profile:
             salt = hashlib.sha1(str(random.random())).hexdigest()[:5]
-            activation_key = hashlib.sha1(salt + email).hexdigest()
+            activation_key = hashlib.sha1(salt + email_or_username).hexdigest()
             key_expires = datetime.datetime.today() + datetime.timedelta(2)
-            userobj.activation_key = activation_key
-            userobj.key_expires = key_expires
-            userobj.is_active = 0
-            userobj.save()
+            user_profile.activation_key = activation_key
+            user_profile.key_expires = key_expires
+            user_profile.is_active = 0
+            user_profile.save()
             email_subject = 'Account Password Reset'
-            email_body = "Hey %s, reset link. To activate your account, click this link within \
-            48hours http://madhu.erpforppl.com:8000/accounts/password_reset/%s" % (username, activation_key)
-            send_mail(email_subject, email_body, 'erp4forppl.com',
-                      [email], fail_silently=False)
-            logger_stats.info('Username request the password reset %s %s'%(username,activation_key))
-            return HttpResponse('{success:True , msg:"Reset link sent"')
+            username = user_profile.get_full_name()
+            username = username if username else user_profile.email
+            email = user_profile.email
+            if email:
+                email_body = "Hey %s, reset link. To activate your account, click this link within \
+                48hours http://madhu.erpforppl.com:8000/accounts/password_reset/%s" % (username, activation_key)
+                send_mail(email_subject, email_body, 'erp4forppl.com',
+                          [email], fail_silently=False)
+                logger_stats.info('Username request the password reset %s %s'%(username,activation_key))
+                return HttpResponse('{success:True , msg:"Reset link sent"')
         else:
             return HttpResponse('{success:false,msg:"This username is not asscoicated with our system"}') 
     else:
         return render_to_response('login.html', context_instance=RequestContext(request))
+
+def password_reset_validate_activation_key(request, activation_key):
+    user_profile = get_object_or_404(CustomUser, activation_key=activation_key)
+    if request.POST and user_profile:
+        user_profile.set_password(password)
+        user_profile.activation_key = ''
+        user_profile.save()
+        return HttpResponseRedirect('/password/reset/complete')
+    elif user_profile:
+        if user_profile.key_expires < str(timezone.now()):
+            return render_to_response('user_profile/confirm_expired.html')
+            # if the key hasn't expired save user and set him as active and render
+            # some template to confirm activation
+        user_profile.is_active = True
+        user_profile.activation_key = ''
+        user_profile.save()
+        return HttpResponseRedirect('password_reset/'+str(activation_key))
+    else:
+        return render_to_response('login.html')

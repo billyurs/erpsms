@@ -11,6 +11,7 @@ urlpatterns = patterns('',
                        # Examples:
                        (r'^login$', 'erpsms.views.login_user'),
                        (r'^createuser$', 'erpsms.views.createuser'),
+                       (r'^password_reset_req_activationkey$', 'erpsms.views.password_reset_send_activation_key'),
                        (r'^$', 'erpsms.views.home'),
                        (r'^usernamesuggestion','erpsms.views.usernamesuggestion'),
                        (r'^accounts/confirm/(?P<activation_key>\w+)/', ('erpsms.views.register_confirm')),
