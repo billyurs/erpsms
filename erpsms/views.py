@@ -153,8 +153,6 @@ def register_confirm(request, activation_key):
 
 
 def password_reset_send_activation_key(request):
-    import pdb
-    pdb.set_trace()
     if request.POST:
         email_or_username = request.POST.get('username', '')
         user_profile = get_object_or_404(
