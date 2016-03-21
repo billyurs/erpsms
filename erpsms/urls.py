@@ -15,6 +15,7 @@ urlpatterns = patterns('',
                        (r'^$', 'erpsms.views.home'),
                        (r'^usernamesuggestion','erpsms.views.usernamesuggestion'),
                        (r'^accounts/confirm/(?P<activation_key>\w+)/', ('erpsms.views.register_confirm')),
+                       (r'^accounts/password_reset/(?P<activation_key>\w+)/', ('erpsms.views.password_reset_validate_activation_key')),
                        # url(r'^blog/', include('blog.urls')),
 
                        url(r'^admin/', include(admin.site.urls)),
