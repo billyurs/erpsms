@@ -12,6 +12,8 @@ import datetime
 import random
 from django.utils import timezone
 from django.views.decorators.clickjacking import xframe_options_exempt
+import settings
+domain = settings.domain
 
 
 def home(request):
@@ -171,7 +173,7 @@ def password_reset_send_activation_key(request):
             email = user_profile.email
             if email:
                 email_body = "Hey %s, reset link. To activate your account, click this link within \
-                48hours http://madhu.erpforppl.com:8000/accounts/password_reset/%s" % (username, activation_key)
+                48hours "+str(domain)+"/accounts/password_reset/%s" % (username, activation_key)
                 send_mail(email_subject, email_body, 'erp4forppl.com',
                           [email], fail_silently=False)
                 logger_stats.info('Username request the password reset %s %s'%(username,activation_key))
@@ -184,18 +186,15 @@ def password_reset_send_activation_key(request):
 def password_reset_validate_activation_key(request, activation_key):
     user_profile = get_object_or_404(CustomUser, activation_key=activation_key)
     if request.POST and user_profile:
-        user_profile.set_password(password)
-        user_profile.activation_key = ''
-        user_profile.save()
-        return HttpResponseRedirect('/password/reset/complete')
+        password = request.POST.get('password','')
+        if password:
+            user_profile.set_password(password)
+            user_profile.activation_key = ''
+            user_profile.save()
+            return HttpResponseRedirect('/password/reset/complete')
     elif user_profile:
         if user_profile.key_expires < str(timezone.now()):
             return render_to_response('user_profile/confirm_expired.html')
-            # if the key hasn't expired save user and set him as active and render
-            # some template to confirm activation
-        user_profile.is_active = True
-        user_profile.activation_key = ''
-        user_profile.save()
-        return HttpResponseRedirect('password_reset/'+str(activation_key))
+        return render_to_response('password_reset.html',context_instance=RequestContext(request))
     else:
         return render_to_response('login.html')
