@@ -124,7 +124,7 @@ def createuser(request):
          # Send email with activation key
         email_subject = 'Account confirmation'
         email_body = "Hey %s, thanks for signing up. To activate your account, click this link within \
-            48hours http://madhu.erpforppl.com:8000/accounts/confirm/%s" % (username, activation_key)
+            48hours %s/accounts/confirm/%s" % (username,domain,activation_key)
         send_mail(email_subject, email_body, 'erp4forppl.com',
                   [email], fail_silently=False)
         return render_to_response('index.html')
@@ -173,7 +173,7 @@ def password_reset_send_activation_key(request):
             email = user_profile.email
             if email:
                 email_body = "Hey %s, reset link. To activate your account, click this link within \
-                48hours "+str(domain)+"/accounts/password_reset/%s" % (username, activation_key)
+                48hours %s/accounts/password_reset/%s" % (username, domain,activation_key)
                 send_mail(email_subject, email_body, 'erp4forppl.com',
                           [email], fail_silently=False)
                 logger_stats.info('Username request the password reset %s %s'%(username,activation_key))
