@@ -38,7 +38,7 @@ def addstudentdetails(request):
         if tenantid_of_req_user:
             personobj = Person()
             persondict = personobj.createobj(firstname=request.POST.get('firstname', ''), middlename=request.POST.get('middlename', ''),
-                                             lasttname=request.POST.get('lasttname', ''), stduentid = request.POST.get('stduentid', '') email=request.POST.get('email', ''),
+                                             lasttname=request.POST.get('lasttname', ''), stduentid = request.POST.get('stduentid', '') ,email=request.POST.get('email', ''),
                                              phno=request.POST.get('phno', ''), gender=request.POST.get('gender', ''), address=request.POST.get('address', ''),
                                              peronjson=request.POST.get('peronjson', ''), notes=request.POST.get('notes', ''), tenantid=tenantid_of_req_user)
             studentobj = Student()
