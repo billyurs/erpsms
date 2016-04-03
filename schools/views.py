@@ -3,6 +3,7 @@ from django.shortcuts import render
 from django.http.response import HttpResponse
 #from developer_config_file import *
 from django.contrib.admin.views.decorators import staff_member_required
+from django.contrib.auth.decorators import login_required
 from django.template.context import RequestContext
 from django.shortcuts import render_to_response, get_object_or_404
 import logging
@@ -29,24 +30,23 @@ def addtenantdetails(request):
 #@personal_member_required
 # TODO : Need to write auth decorator
 
-
+@login_required
 def addstudentdetails(request):
     import pdb; pdb.set_trace()
-    logger.debug("this is a debug message!")
-    logger_stats.error('this is error')
     if request.POST:
-        tenantid_of_req_user = request.user['tenantid']
+        tenantid_of_req_user = request.user.tenantid
         if tenantid_of_req_user:
             personobj = Person()
             persondict = personobj.createobj(firstname=request.POST.get('firstname', ''), middlename=request.POST.get('middlename', ''),
-                                             lasttname=request.POST.get('lasttname', ''), email=request.POST.get('email', ''),
+                                             lasttname=request.POST.get('lasttname', ''), stduentid = request.POST.get('stduentid', '') email=request.POST.get('email', ''),
                                              phno=request.POST.get('phno', ''), gender=request.POST.get('gender', ''), address=request.POST.get('address', ''),
                                              peronjson=request.POST.get('peronjson', ''), notes=request.POST.get('notes', ''), tenantid=tenantid_of_req_user)
             studentobj = Student()
             parentjson = {'Parent_details': request.POST.get('parentjson', {})}
             studentobj.createobj(person=persondict, studentid=request.POST.get('studentid', ''),
                                  parentjson=parentjson, studentjson={}, notes=request.POST.get('notes', ''))
-    return render_to_response('simple.html',
+            logger_stats.info('Adding Student Details %s'%(request.POST))
+    return render_to_response('form.html',
                               context_instance=RequestContext(request))
 
 #@personal_member_required
