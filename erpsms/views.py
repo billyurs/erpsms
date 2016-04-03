@@ -33,10 +33,12 @@ def login_user(request):
         if user:
             if user.is_active:
                 login(request, user)
-                return HttpResponseRedirect('/main/')
+                return render_to_response('form.html', {}, context_instance=RequestContext(request))
         flavor = request.POST.get('flavor', '')
         if flavor == 'android':
             return HttpResponse('{success:false,msg:"This username is not asscoicated with our system"}')
+    elif request.user.is_authenticated():
+        return render_to_response('form.html', {}, context_instance=RequestContext(request))
     return render_to_response('login.html', {}, context_instance=RequestContext(request))
 
 
@@ -48,7 +50,7 @@ def index(request):
             var = request.POST['var']
         except:
             print 'Where is my var?'
-    return render_to_response('simple.html', {}, context_instance=RequestContext(request))
+    return render_to_response('form.html', {}, context_instance=RequestContext(request))
 
 
 def facebookauth(request):
