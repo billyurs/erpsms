@@ -30,6 +30,7 @@ urlpatterns = patterns('',
                        url(r'', include('social_auth.urls')),
                        url(r'^accounts/facebook/login/', 'erpsms.views.facebookauth'),
                        url(r'^allauth/accounts/', include('allauth.urls')),
+                       url(r'^autodeploy/', include('erpsms.views.autodeploy')),
 
                        #url('', include(
                         #   'social.apps.django_app.urls', namespace='social')),

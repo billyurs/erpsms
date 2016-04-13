@@ -13,6 +13,7 @@ import random
 from django.utils import timezone
 from django.views.decorators.clickjacking import xframe_options_exempt
 import settings
+import os
 domain = settings.domain
 
 
@@ -200,3 +201,9 @@ def password_reset_validate_activation_key(request, activation_key):
         return render_to_response('password_reset.html',context_instance=RequestContext(request))
     else:
         return render_to_response('login.html')
+
+def autodeploy(request):
+    logger_stats.info('The Server is Restarting')
+    # Path of WSGI File
+    fname = '/var/www/erpforppl_pythonanywhere_com_wsgi.py' 
+    os.utime(fname, None)
