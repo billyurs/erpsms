@@ -150,6 +150,7 @@ def register_confirm(request, activation_key):
         return render_to_response('user_profile/confirm_expired.html')
     # if the key hasn't expired save user and set him as active and render
     # some template to confirm activation
+
     user_profile.is_active = True
     user_profile.activation_key = ''
     user_profile.save()
@@ -203,7 +204,19 @@ def password_reset_validate_activation_key(request, activation_key):
         return render_to_response('login.html')
 
 def autodeploy(request):
+    """
+    To autodeploy at server end
+    """
     logger_stats.info('The Server is Restarting')
     # Path of WSGI File
     fname = '/var/www/erpforppl_pythonanywhere_com_wsgi.py' 
-    os.utime(fname, None)
+    if os.path.exists(fname):
+    	try:
+            os.utime(fname, None)
+            logger_stats.info('The server restarted successfully')
+        except Exception e:
+            logger_stats.critical('Error %s'%(e))
+    else:
+        logger_stats.info('File not found so server failed to restart , file path : %s'%(fname))
+
+
