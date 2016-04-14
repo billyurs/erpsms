@@ -210,7 +210,7 @@ def autodeploy(request):
     """
     import git
     gitobj = git.cmd.Git('/home/erpforppl/erpsms')
-    resp = g.pull()
+    resp = gitobj.pull()
     logger_stats.info('The response from git %s '%(resp))
     logger_stats.info('The Server is Restarting')
     # Path of WSGI File
