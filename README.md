@@ -30,7 +30,7 @@ This README would normally document whatever steps are necessary to get your app
 
 
 
-
+# Below packages need to be installed
 Django==1.8.2
 django-allauth==0.24.1
 django-social-auth==0.7.28

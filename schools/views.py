@@ -32,7 +32,6 @@ def addtenantdetails(request):
 
 @login_required
 def addstudentdetails(request):
-    import pdb; pdb.set_trace()
     if request.POST:
         tenantid_of_req_user = request.user.tenantid
         if tenantid_of_req_user:
