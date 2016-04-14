@@ -150,7 +150,6 @@ def register_confirm(request, activation_key):
         return render_to_response('user_profile/confirm_expired.html')
     # if the key hasn't expired save user and set him as active and render
     # some template to confirm activation
-
     user_profile.is_active = True
     user_profile.activation_key = ''
     user_profile.save()
@@ -203,6 +202,7 @@ def password_reset_validate_activation_key(request, activation_key):
     else:
         return render_to_response('login.html')
 
+@staff_member_required
 def autodeploy(request):
     """
     To autodeploy at server end
