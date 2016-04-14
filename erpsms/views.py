@@ -208,6 +208,10 @@ def autodeploy(request):
     """
     To autodeploy at server end
     """
+    import git
+    gitobj = git.cmd.Git('/home/erpforppl/erpsms')
+    resp = g.pull()
+    logger_stats.info('The response from git %s '%(resp))
     logger_stats.info('The Server is Restarting')
     # Path of WSGI File
     fname = '/var/www/erpforppl_pythonanywhere_com_wsgi.py' 
