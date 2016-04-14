@@ -29,7 +29,7 @@ def home(request):
 def login_user(request):
     username = password = ''
     if request.POST:
-        usernam = request.POST['username']
+        username = request.POST['username']
         password = request.POST['password']
         user = authenticate(username=username, password=password)
         if user:
