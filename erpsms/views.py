@@ -1,5 +1,6 @@
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template.context import RequestContext
+from django.contrib.admin.views.decorators import staff_member_required
 from django.http import *
 from registration.models import *
 from django.contrib.auth.decorators import login_required
@@ -28,7 +29,7 @@ def home(request):
 def login_user(request):
     username = password = ''
     if request.POST:
-        username = request.POST['username']
+        usernam = request.POST['username']
         password = request.POST['password']
         user = authenticate(username=username, password=password)
         if user:
@@ -214,9 +215,9 @@ def autodeploy(request):
     	try:
             os.utime(fname, None)
             logger_stats.info('The server restarted successfully')
-        except Exception e:
+        except Exception , e:
             logger_stats.critical('Error %s'%(e))
     else:
         logger_stats.info('File not found so server failed to restart , file path : %s'%(fname))
 
-
+    return HttpResponse("Auto Deploy Executed", content_type="text/plain")

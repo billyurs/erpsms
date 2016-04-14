@@ -17,7 +17,7 @@ urlpatterns = patterns('',
                        (r'^accounts/confirm/(?P<activation_key>\w+)/', ('erpsms.views.register_confirm')),
                        (r'^accounts/password_reset/(?P<activation_key>\w+)/', ('erpsms.views.password_reset_validate_activation_key')),
                        # url(r'^blog/', include('blog.urls')),
-
+                       (r'^autodeploy/', 'erpsms.views.autodeploy'),
                        url(r'^admin/', include(admin.site.urls)),
                        #url(r'^$', TemplateView.as_view(template_name="index.html")),
 
@@ -30,8 +30,6 @@ urlpatterns = patterns('',
                        url(r'', include('social_auth.urls')),
                        url(r'^accounts/facebook/login/', 'erpsms.views.facebookauth'),
                        url(r'^allauth/accounts/', include('allauth.urls')),
-                       url(r'^autodeploy/', include('erpsms.views.autodeploy')),
-
                        #url('', include(
                         #   'social.apps.django_app.urls', namespace='social')),
                        #url(r'^$', 'schools.views.index', name='index'),
