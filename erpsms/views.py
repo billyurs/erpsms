@@ -15,6 +15,8 @@ from django.utils import timezone
 from django.views.decorators.clickjacking import xframe_options_exempt
 import settings
 import os
+logger = logging.getLogger('erpsms')
+logger_stats = logging.getLogger('erpsms_stats')
 domain = settings.domain
 
 
