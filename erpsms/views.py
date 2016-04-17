@@ -208,22 +208,29 @@ def password_reset_validate_activation_key(request, activation_key):
 @staff_member_required
 def autodeploy(request):
     """
-    To autodeploy at server end
+    To pull from master and autodeploy at server end
     """
     import git
-    gitobj = git.cmd.Git('/home/erpforppl/erpsms')
-    resp = gitobj.pull()
-    logger_stats.info('The response from git %s '%(resp))
-    logger_stats.info('The Server is Restarting')
-    # Path of WSGI File
-    fname = '/var/www/erpforppl_pythonanywhere_com_wsgi.py' 
-    if os.path.exists(fname):
-    	try:
-            os.utime(fname, None)
-            logger_stats.info('The server restarted successfully')
-        except Exception , e:
-            logger_stats.critical('Error %s'%(e))
+    if request.POST:
+        username = request.POST['username']
+    	password = request.POST['password']
+        workingdir = os.getcwd()
+    	gitobj = git.cmd.Git(workingdir)
+    	resp = gitobj.pull('https://'+username+':'+password+'@bitbucket.org/localhakcers/erpsms.git')
+    	logger_stats.info('The response from git %s '%(resp))
+    	logger_stats.info('The Server is Restarting')
+    	# Path of WSGI File
+    	fname = '/var/www/erpforppl_pythonanywhere_com_wsgi.py' 
+    	if os.path.exists(fname):
+    	    try:
+                os.utime(fname, None)
+                logger_stats.info('The server restarted successfully')
+            except Exception , e:
+                logger_stats.critical('Error %s'%(e))
+        else:
+            logger_stats.info('File not found so server failed to restart , file path : %s'%(fname))
+        return HttpResponse("Auto Deploy Executed", content_type="text/plain")
     else:
-        logger_stats.info('File not found so server failed to restart , file path : %s'%(fname))
-
-    return HttpResponse("Auto Deploy Executed", content_type="text/plain")
+        # To do Need to render correct Render
+        render_to_response('password_reset.html',context_instance=RequestContext(request))
+   
