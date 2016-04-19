@@ -42,10 +42,12 @@ def login_user(request):
                 if flavor == 'android':
                     return HttpResponse(simplejson.dumps({'success':True,'msg':"Login Success"}))
                 return render_to_response('form.html', {}, context_instance=RequestContext(request))
+        else:
+            if flavor == 'android':     
+                return HttpResponse(simplejson.dumps({'success':False,'msg':"This username is not asscoicated with our system"}))
+            return render_to_response('login.html', {}, context_instance=RequestContext(request))
     elif request.user.is_authenticated():
         return render_to_response('form.html', {}, context_instance=RequestContext(request))
-    if flavor == 'android':     
-                return HttpResponse(simplejson.dumps({'success':False,'msg':"This username is not asscoicated with our system"}))
     return render_to_response('login.html', {}, context_instance=RequestContext(request))
 
 
