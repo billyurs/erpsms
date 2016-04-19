@@ -47,3 +47,5 @@ requests-oauthlib==0.6.1
 six==1.10.0
 validate-email==1.3
 wheel==0.26.0
+gitdb==0.6.4
+GitPython==1.0.2
