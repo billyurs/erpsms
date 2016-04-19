@@ -13,6 +13,7 @@ import datetime
 import random
 from django.utils import timezone
 from django.views.decorators.clickjacking import xframe_options_exempt
+import simplejson
 import settings
 import os
 logger = logging.getLogger('erpsms')
@@ -34,13 +35,15 @@ def login_user(request):
         username = request.POST['username']
         password = request.POST['password']
         user = authenticate(username=username, password=password)
+        flavor = request.POST.get('flavor', '')
         if user:
             if user.is_active:
                 login(request, user)
+                if flavor == 'android':
+                    return HttpResponse(simplejson.dumps({'success':True,'msg':"Login Success"}))
                 return render_to_response('form.html', {}, context_instance=RequestContext(request))
-        flavor = request.POST.get('flavor', '')
-        if flavor == 'android':
-            return HttpResponse('{success:false,msg:"This username is not asscoicated with our system"}')
+            if flavor == 'android':     
+            return HttpResponse(simplejson.dumps({'success':False,'msg':"This username is not asscoicated with our system"}))
     elif request.user.is_authenticated():
         return render_to_response('form.html', {}, context_instance=RequestContext(request))
     return render_to_response('login.html', {}, context_instance=RequestContext(request))
