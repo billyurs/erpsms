@@ -10,8 +10,10 @@ from django.contrib.auth.models import BaseUserManager
 from allauth.account.signals import user_signed_up
 from django.dispatch import receiver
 import logging
+
 logger = logging.getLogger('erpsms')
 logger_stats = logging.getLogger('erpsms_stats')
+
 
 def get_or_none(model, *args, **kwargs):
     try:
@@ -19,24 +21,25 @@ def get_or_none(model, *args, **kwargs):
     except model.DoesNotExist:
         return None
 
-class CustomUserManager(BaseUserManager):
 
+class CustomUserManager(BaseUserManager):
     def _create_user(self, email, password,
                      is_staff=False, is_superuser=False, **extra_fields):
         """
         Creates and saves a User with the given email and password.
         """
-        import pdb; pdb.set_trace()
+        import pdb;
+        pdb.set_trace()
         now = timezone.now()
         if not email:
             raise ValueError('The given email must be set')
         email = self.normalize_email(email)
-        logger.info("Email tried to create user"+email)
-        #Checking user  already exist or not
+        logger.info("Email tried to create user" + email)
+        # Checking user  already exist or not
         username = extra_fields.get('username', '')
         if not username:
             username = email
-        user = get_or_none(model = CustomUser,email = email)
+        user = get_or_none(model=CustomUser, email=email)
         if not user:
             user = CustomUser(email=email,
                               is_staff=is_staff, is_active=True,
@@ -54,6 +57,7 @@ class CustomUserManager(BaseUserManager):
         return self._create_user(email, password, True, True,
                                  **extra_fields)
 
+
 class CustomUser(AbstractBaseUser, PermissionsMixin):
     """
     A fully featured User model with admin-compliant permissions that uses
@@ -61,7 +65,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
     Email and password are required. Other fields are optional.
     """
-    #import pdb; pdb.set_trace()
+    # import pdb; pdb.set_trace()
     email = models.EmailField(_('email address'), max_length=254, unique=True)
     first_name = models.CharField(_('first name'), max_length=30, blank=True)
     last_name = models.CharField(_('last name'), max_length=30, blank=True)

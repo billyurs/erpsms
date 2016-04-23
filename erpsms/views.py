@@ -16,6 +16,7 @@ from django.views.decorators.clickjacking import xframe_options_exempt
 import simplejson
 import settings
 import os
+
 logger = logging.getLogger('erpsms')
 logger_stats = logging.getLogger('erpsms_stats')
 domain = settings.domain
@@ -40,11 +41,12 @@ def login_user(request):
             if user.is_active:
                 login(request, user)
                 if flavor == 'android':
-                    return HttpResponse(simplejson.dumps({'success':True,'msg':"Login Success"}))
+                    return HttpResponse(simplejson.dumps({'success': True, 'msg': "Login Success"}))
                 return render_to_response('form.html', {}, context_instance=RequestContext(request))
         else:
-            if flavor == 'android':     
-                return HttpResponse(simplejson.dumps({'success':False,'msg':"This username is not asscoicated with our system"}))
+            if flavor == 'android':
+                return HttpResponse(
+                    simplejson.dumps({'success': False, 'msg': "This username is not asscoicated with our system"}))
             return render_to_response('login.html', {}, context_instance=RequestContext(request))
     elif request.user.is_authenticated():
         return render_to_response('form.html', {}, context_instance=RequestContext(request))
@@ -95,24 +97,24 @@ def usernamesuggestion(request):
                 numlist = re.findall(r'\d+', email)
                 if numlist:
                     replacenum = int(numlist[0])
-                    while(True):
+                    while (True):
                         replacenum += 1
                         newusername = str(replacenum)
                         usrobj = get_or_none(
                             model=CustomUser, email=email + newusername)
                         if not usrobj:
                             returnmsg += ' Available username is ' + \
-                                email + newusername
+                                         email + newusername
                             return HttpResponse(returnmsg, content_type="text/plain")
                 else:
                     startno = 0
-                    while(True):
+                    while (True):
                         startno += 1
                         usrobj = get_or_none(
                             model=CustomUser, email=email + str(startno))
                         if usrobj is None:
                             returnmsg += ' Available username is ' + \
-                                email + str(startno)
+                                         email + str(startno)
                             return HttpResponse(returnmsg, content_type="text/plain")
     return render_to_response('login.html', context_instance=RequestContext(request))
 
@@ -132,10 +134,10 @@ def createuser(request):
         userobj.key_expires = key_expires
         userobj.is_active = 0
         userobj.save()
-         # Send email with activation key
+        # Send email with activation key
         email_subject = 'Account confirmation'
         email_body = "Hey %s, thanks for signing up. To activate your account, click this link within \
-            48hours %s/accounts/confirm/%s" % (username,domain,activation_key)
+            48hours %s/accounts/confirm/%s" % (username, domain, activation_key)
         send_mail(email_subject, email_body, 'erp4forppl.com',
                   [email], fail_silently=False)
         return render_to_response('index.html')
@@ -184,20 +186,21 @@ def password_reset_send_activation_key(request):
             email = user_profile.email
             if email:
                 email_body = "Hey %s, reset link. To activate your account, click this link within \
-                48hours %s/accounts/password_reset/%s" % (username, domain,activation_key)
+                48hours %s/accounts/password_reset/%s" % (username, domain, activation_key)
                 send_mail(email_subject, email_body, 'erp4forppl.com',
                           [email], fail_silently=False)
-                logger_stats.info('Username request the password reset %s %s'%(username,activation_key))
+                logger_stats.info('Username request the password reset %s %s' % (username, activation_key))
                 return HttpResponse('{success:True , msg:"Reset link sent"')
         else:
-            return HttpResponse('{success:false,msg:"This username is not asscoicated with our system"}') 
+            return HttpResponse('{success:false,msg:"This username is not asscoicated with our system"}')
     else:
         return render_to_response('login.html', context_instance=RequestContext(request))
+
 
 def password_reset_validate_activation_key(request, activation_key):
     user_profile = get_object_or_404(CustomUser, activation_key=activation_key)
     if request.POST and user_profile:
-        password = request.POST.get('password','')
+        password = request.POST.get('password', '')
         if password:
             user_profile.set_password(password)
             user_profile.activation_key = ''
@@ -206,9 +209,10 @@ def password_reset_validate_activation_key(request, activation_key):
     elif user_profile:
         if user_profile.key_expires < str(timezone.now()):
             return render_to_response('user_profile/confirm_expired.html')
-        return render_to_response('password_reset.html',context_instance=RequestContext(request))
+        return render_to_response('password_reset.html', context_instance=RequestContext(request))
     else:
         return render_to_response('login.html')
+
 
 @staff_member_required
 def autodeploy(request):
@@ -218,24 +222,23 @@ def autodeploy(request):
     import git
     if request.POST:
         username = request.POST['username']
-    	password = request.POST['password']
+        password = request.POST['password']
         workingdir = os.getcwd()
-    	gitobj = git.cmd.Git(workingdir)
-    	resp = gitobj.pull('https://'+username+':'+password+'@bitbucket.org/localhakcers/erpsms.git')
-    	logger_stats.info('The response from git %s '%(resp))
-    	logger_stats.info('The Server is Restarting')
-    	# Path of WSGI File
-    	fname = '/var/www/erpforppl_pythonanywhere_com_wsgi.py' 
-    	if os.path.exists(fname):
-    	    try:
+        gitobj = git.cmd.Git(workingdir)
+        resp = gitobj.pull('https://' + username + ':' + password + '@bitbucket.org/localhakcers/erpsms.git')
+        logger_stats.info('The response from git %s ' % (resp))
+        logger_stats.info('The Server is Restarting')
+        # Path of WSGI File
+        fname = '/var/www/erpforppl_pythonanywhere_com_wsgi.py'
+        if os.path.exists(fname):
+            try:
                 os.utime(fname, None)
                 logger_stats.info('The server restarted successfully')
-            except Exception , e:
-                logger_stats.critical('Error %s'%(e))
+            except Exception, e:
+                logger_stats.critical('Error %s' % (e))
         else:
-            logger_stats.info('File not found so server failed to restart , file path : %s'%(fname))
+            logger_stats.info('File not found so server failed to restart , file path : %s' % (fname))
         return HttpResponse("Auto Deploy Executed", content_type="text/plain")
     else:
         # To do Need to render correct Render
-        render_to_response('password_reset.html',context_instance=RequestContext(request))
-   
+        render_to_response('password_reset.html', context_instance=RequestContext(request))
