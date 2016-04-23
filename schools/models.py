@@ -38,6 +38,7 @@ class TenantDetails(object):
         tenantobj = {'tenantid': tenantid, 'tenantname': tenantname, 'notes': notes, 'tenantjson': tenantjson
                      }
         return tenantobj
+
     '''
     def getobj(self, getattr, getval):
         """
@@ -51,7 +52,8 @@ class TenantDetails(object):
 
     def deleteobj(self, getattr, getval):
         deletecolldetails(tenantdetailscoll, getattr, getval)
-    '''    
+    '''
+
 
 class Person(object):
     # To update the instance directly
@@ -62,12 +64,13 @@ class Person(object):
         self.persontdetailscoll = MongoWrapper().get_mongo_collection(
             database='erpmongodb', collection='Person')
 
-    def createobj(self, firstname='', middlename='', lasttname='', email='', phno='', gender='', address='', peronjson={}, notes='', tenantid=''):
+    def createobj(self, firstname='', middlename='', lasttname='', email='', phno='', gender='', address='',
+                  peronjson={}, notes='', tenantid=''):
         """
         This function is to insert the document into Tenant Details collection
         """
         personobj = {'firstname': firstname, 'middlename': middlename, 'lasttname': lasttname, 'email': email, 'phno':
-                     phno, 'gender': gender, 'address': address, 'peronjson': peronjson, 'notes': notes, 'tenantid': tenantid}
+            phno, 'gender': gender, 'address': address, 'peronjson': peronjson, 'notes': notes, 'tenantid': tenantid}
         self.persontdetailscoll.insert(tenantobj, safe=True)
 
     def getobj(self, getval, getattr):
@@ -82,7 +85,7 @@ class Person(object):
 
 
 class Student(object):
-       # To update the instance directly
+    # To update the instance directly
     _shared_state = {}
 
     def __init__(self):
@@ -91,7 +94,8 @@ class Student(object):
             database='erpmongodb', collection='Student')
 
     def createobj(self, person='', studentid='', parentjson={}, studentjson={}, notes=''):
-        studentobj = {'personid': personid, 'studentid': studentid, 'studentjson': studentjson, 'notes': notes, 'tenantid': tenantid}
+        studentobj = {'personid': personid, 'studentid': studentid, 'studentjson': studentjson, 'notes': notes,
+                      'tenantid': tenantid}
         self.studentdetailscoll.save()
 
     def getobj(self, getval, getattr):
@@ -106,7 +110,7 @@ class Student(object):
 
 
 class Parent(object):
-       # To update the instance directly
+    # To update the instance directly
     _shared_state = {}
 
     def __init__(self):
@@ -116,7 +120,7 @@ class Parent(object):
 
     def createobj(self, personid='', studentid='', parentjson={}, mobile='', notes='', tenantid=''):
         parentjson = {'personid': personid, 'studentid': studentid, 'parentjson':
-                      parentjson, 'mobile': mobile, 'notes': notes, 'tenantid': tenantid}
+            parentjson, 'mobile': mobile, 'notes': notes, 'tenantid': tenantid}
         self.parentdetailscoll.save()
 
     def getobj(self, getval, getattr):
@@ -131,7 +135,7 @@ class Parent(object):
 
 
 class Teacher(object):
-       # To update the instance directly
+    # To update the instance directly
     _shared_state = {}
 
     def __init__(self):
@@ -139,9 +143,10 @@ class Teacher(object):
         self.teacherdetailcoll = MongoWrapper().get_mongo_collection(
             database='erpmongodb', collection='Teacher')
 
-    def createobj(self, personid='', teacheridemail='', subjectdetails={}, mobile='', teacherjson={}, notes='', tenantid='tenantid'):
+    def createobj(self, personid='', teacheridemail='', subjectdetails={}, mobile='', teacherjson={}, notes='',
+                  tenantid='tenantid'):
         parentjson = {'personid': personid, 'teacheridemail': teacheridemail, 'subjectdetails':
-                      subjectdetails, 'mobile': mobile, 'notes': notes, 'tenantid': tenantid, 'teacherjson': teacherjson}
+            subjectdetails, 'mobile': mobile, 'notes': notes, 'tenantid': tenantid, 'teacherjson': teacherjson}
         self.teacherdetailcoll.save()
 
     def getobj(self, getval, getattr):
