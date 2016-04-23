@@ -13,7 +13,7 @@ import datetime
 import random
 from django.utils import timezone
 from django.views.decorators.clickjacking import xframe_options_exempt
-import simplejson
+from common import erpsms_json as simplejson
 import settings
 import os
 
@@ -54,15 +54,12 @@ def login_user(request):
 
 
 def index(request):
-    if request.method == 'POST':
-        try:
-            import pdb
-            pdb.set_trace()
-            var = request.POST['var']
-        except:
-            print 'Where is my var?'
-    return render_to_response('form.html', {}, context_instance=RequestContext(request))
-
+    """
+    :param request:
+    :return:
+    Test method
+    """
+    pass
 
 def facebookauth(request):
     if request.user.is_authenticated():
@@ -228,6 +225,14 @@ def autodeploy(request):
         resp = gitobj.pull('https://' + username + ':' + password + '@bitbucket.org/localhakcers/erpsms.git')
         logger_stats.info('The response from git %s ' % (resp))
         logger_stats.info('The Server is Restarting')
+        # To install pip packages 
+        python_package = request.POST['pythonpackage']
+        try:
+            if python_package:
+                pip.main(['install', python_package])
+                logger_stats.info('Python package installed successfully %s '%(python_package))
+        except Exception, e:
+             logger_stats.info('Exception during installing the python package %s and error : %s'%(python_package,e))
         # Path of WSGI File
         fname = '/var/www/erpforppl_pythonanywhere_com_wsgi.py'
         if os.path.exists(fname):
