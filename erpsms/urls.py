@@ -13,11 +13,12 @@ urlpatterns = patterns('',
                        (r'^createuser$', 'erpsms.views.createuser'),
                        (r'^password_reset_req_activationkey$', 'erpsms.views.password_reset_send_activation_key'),
                        (r'^$', 'erpsms.views.home'),
-                       (r'^usernamesuggestion','erpsms.views.usernamesuggestion'),
                        (r'^accounts/confirm/(?P<activation_key>\w+)/', ('erpsms.views.register_confirm')),
                        (r'^accounts/password_reset/(?P<activation_key>\w+)/', ('erpsms.views.password_reset_validate_activation_key')),
                        # url(r'^blog/', include('blog.urls')),
                        (r'^autodeploy/', 'erpsms.views.autodeploy'),
+                       (r'^usernamesuggestion','erpsms.views.usernamesuggestion'),
+                       (r'^common/getcsrf','common.csrferpsmsdecorators.csrfforapi'),
                        url(r'^admin/', include(admin.site.urls)),
                        #url(r'^$', TemplateView.as_view(template_name="index.html")),
 
@@ -37,3 +38,4 @@ urlpatterns = patterns('',
                        )
 if 'schools' in settings.INSTALLED_APPS:
     urlpatterns += patterns('', url(r'^schools', include('schools.urls')))
+
