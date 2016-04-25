@@ -1,11 +1,8 @@
+package com.example.sweety.aceapplication;
 
 import android.app.Dialog;
 import android.app.ProgressDialog;
-import android.content.SharedPreferences;
-import android.database.Cursor;
-import android.nfc.Tag;
 import android.os.Bundle;
-import android.provider.SyncStateContract;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
@@ -14,59 +11,38 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.app.ProgressDialog;
 import android.os.AsyncTask;
-import android.widget.Toast;
 
 import com.example.sweety.aceapplication.DataBase.DataStoreAndAccessClass;
-import com.example.sweety.aceapplication.ServerClass.HttpRequestAndResponse;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.client.params.HttpClientParams;
 import org.apache.http.client.protocol.ClientContext;
 import org.apache.http.cookie.Cookie;
-import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.BasicCookieStore;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.cookie.BasicClientCookie;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.protocol.BasicHttpContext;
 import org.apache.http.protocol.HttpContext;
-import org.apache.http.util.EntityUtils;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
-import java.net.Authenticator;
-import java.net.CookieHandler;
-import java.net.CookieManager;
 import java.net.CookieStore;
 import java.net.HttpCookie;
-import java.net.HttpURLConnection;
-import java.net.InetSocketAddress;
-import java.net.PasswordAuthentication;
-import java.net.Proxy;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Objects;
 
 public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "LoginActivity";
@@ -158,13 +134,39 @@ public class LoginActivity extends AppCompatActivity {
         class LoginAsync extends AsyncTask<String, Void, String>{
             boolean responseFromServer;
             private Dialog loadingDialog;
+            String cookieString="";
 
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
                 loadingDialog = ProgressDialog.show(LoginActivity.this, "Please wait", "Authenticating...");
             }
-
+            public String getCsrfFromUrl(String url,DefaultHttpClient httpClientStatic) throws IOException
+            {
+                HttpGet httppost = new HttpGet(url);
+                Log.e(TAG,"getCsrfFromUrl() called-->"+httppost);
+                
+                HttpResponse httpResponse = httpClientStatic.execute(httppost);
+                Log.e(TAG,"getCsrfFromUrl() called-->httpResponse--->"+httpResponse);
+                
+                HttpEntity httpEntity = httpResponse.getEntity();
+                Log.e(TAG,"getCsrfFromUrl() called-->httpEntity--->"+httpEntity);
+                
+                List<Cookie> cookies = httpClientStatic.getCookieStore().getCookies();
+                Iterator<Cookie> cookieIterator=cookies.iterator();
+                while(cookieIterator.hasNext())
+                {
+                    Cookie cookie = cookieIterator.next();
+                    cookieString += cookie.getName() + "=" + cookie.getValue() + ";";
+                    if (cookie.getName().equals("csrftoken"))
+                    {
+                        Log.e(TAG,"getCsrfFromUrl() called-->--->(cookie.getName().equals(\"csrftoken\")--->"+cookie.getValue());
+                        Log.e(TAG,"getCsrfFromUrl() called-->--->cookieString Value--->"+cookieString);
+                        return cookie.getValue();
+                    }
+                }
+                return null;
+            }
             @Override
             protected String doInBackground(String... params) {
                 String uname = params[0];
@@ -174,19 +176,42 @@ public class LoginActivity extends AppCompatActivity {
                 List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
                 nameValuePairs.add(new BasicNameValuePair("username",uname));
                 nameValuePairs.add(new BasicNameValuePair("password",pass));
-                nameValuePairs.add(new BasicNameValuePair("flavor","android"));
                 String result = null;
                 Log.e(TAG,"Login---->List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(); "+nameValuePairs.toString());
                 try {
-                    HttpClient httpClient = new DefaultHttpClient();
+                    DefaultHttpClient httpClient = new DefaultHttpClient();
                     Log.e(TAG,"Login---->LoginAsync class HttpClientObject Created: "+httpClient);
 
+                    //CSRF Cookie Format sending to Server
+                    String CSRFTOKEN =  getCsrfFromUrl(L_URL,httpClient);
+                    Log.e(TAG,"Login---->LoginAsync class CRRFTOKEN value--->: "+CSRFTOKEN);
+
+                    nameValuePairs.add(new BasicNameValuePair("flavor", "android"));
+
+                    //HttpPost object s created using URL.
                     HttpPost httpPost = new HttpPost(L_URL);
-                    Log.e(TAG,"Login---->LoginAsync class HttpPostObject Created: "+httpPost);
-
+                    Log.e(TAG, "Login---->LoginAsync class HttpPostObject Created: " + httpPost);
                     httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+                    httpPost.setHeader("X-CSRFToken", CSRFTOKEN);
+                    httpPost.setHeader("Cookie", cookieString);
 
-                    HttpResponse response = httpClient.execute(httpPost);
+                    final BasicCookieStore cookieStore =  new BasicCookieStore();
+                    Log.e(TAG,"Login---->LoginAsync class BasicCookieStoreObject Created: "+cookieStore);
+
+                    BasicClientCookie csrf_cookie = new BasicClientCookie("X-CSRFToken", CSRFTOKEN);
+                    Log.e(TAG,"Login---->LoginAsync class BasicClientCookieObject Created: "+csrf_cookie);
+
+                    csrf_cookie.setDomain("URL-SERVER");
+                    cookieStore.addCookie(csrf_cookie);
+
+                    // Create local HTTP context - to store cookies
+                    HttpContext localContext = new BasicHttpContext();
+                    Log.e(TAG,"Login---->LoginAsync class HttpContextObject Created: "+localContext);
+
+                    // Bind custom cookie store to the local context
+                    localContext.setAttribute(ClientContext.COOKIE_STORE, cookieStore);
+
+                    HttpResponse response = httpClient.execute(httpPost,localContext);
                     Log.e(TAG,"Login---->LoginAsync class HttpResponse Created: "+response);
 
                     HttpEntity entity = response.getEntity();
