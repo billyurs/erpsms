@@ -49,3 +49,5 @@ validate-email==1.3
 wheel==0.26.0
 gitdb==0.6.4
 GitPython==1.0.2
+simplejson==3.8.2
+ujson==1.35
