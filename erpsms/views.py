@@ -19,6 +19,7 @@ import os
 from django.views.decorators.csrf import ensure_csrf_cookie
 logger = logging.getLogger('erpsms')
 logger_stats = logging.getLogger('erpsms_stats')
+from django.views.decorators.csrf import csrf_protect
 domain = settings.domain
 
 
@@ -38,11 +39,11 @@ def login_user(request):
         password = request.POST['password']
         user = authenticate(username=username, password=password)
         flavor = request.POST.get('flavor', '')
-        logger_stats.info('Request Dict Values at login_user function %s'%(request.POST))
+        logger_stats.info('login username %s and flavor %s'%(username,flavor))
         if user:
             if user.is_active:
                 login(request, user)
-                logger_stats('Logged in successfully , user %s and request %s'%(username,request.POST))
+                logger_stats.info('Logged in successfully , user %s and flavor %s'%(username,flavor))
                 if flavor == 'android':
                     return HttpResponse(simplejson.dumps({'success': True, 'msg': "Login Success"}))
                 return render_to_response('form.html', {}, context_instance=RequestContext(request))
