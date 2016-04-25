@@ -16,7 +16,7 @@ from django.views.decorators.clickjacking import xframe_options_exempt
 import simplejson
 import settings
 import os
-
+from django.views.decorators.csrf import ensure_csrf_cookie
 logger = logging.getLogger('erpsms')
 logger_stats = logging.getLogger('erpsms_stats')
 domain = settings.domain
@@ -30,6 +30,7 @@ def home(request):
                               context_instance=context)
 
 
+@ensure_csrf_cookie
 def login_user(request):
     username = password = ''
     if request.POST:
