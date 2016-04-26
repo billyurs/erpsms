@@ -66,6 +66,7 @@ def index(request):
     pass
 
 def facebookauth(request):
+    logger_stats.info('Facebook Auth Req %s'%(request))
     if request.user.is_authenticated():
         return HttpResponseRedirect(request.META['HTTP_REFERER'])
     else:
