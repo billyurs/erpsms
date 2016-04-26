@@ -28,8 +28,6 @@ class CustomUserManager(BaseUserManager):
         """
         Creates and saves a User with the given email and password.
         """
-        import pdb;
-        pdb.set_trace()
         now = timezone.now()
         if not email:
             raise ValueError('The given email must be set')
@@ -65,7 +63,6 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
     Email and password are required. Other fields are optional.
     """
-    # import pdb; pdb.set_trace()
     email = models.EmailField(_('email address'), max_length=254, unique=True)
     first_name = models.CharField(_('first name'), max_length=30, blank=True)
     last_name = models.CharField(_('last name'), max_length=30, blank=True)
