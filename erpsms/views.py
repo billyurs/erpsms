@@ -65,13 +65,26 @@ def index(request):
     """
     pass
 
-def facebookauth(request):
+def facebookauthrequest(request):
     logger_stats.info('Facebook Auth Req %s'%(request))
     if request.user.is_authenticated():
         return HttpResponseRedirect(request.META['HTTP_REFERER'])
     else:
         return HttpResponseRedirect('allauth/accounts/facebook/login/')
 
+def googleauthrequest(request):
+    logger_stats.info('Google Auth Req %s'%(request))
+    if request.user.is_authenticated():
+        return HttpResponseRedirect(request.META['HTTP_REFERER'])
+    else:
+        return HttpResponseRedirect('allauth/accounts/google/login/')
+
+def signsuccess(request):
+    flavor = request.GET.get('flavor', '')
+    if flavor == 'android':
+        return HttpResponse(simplejson.dumps({'success': True, 'msg': "Signin_Login_Success"}))
+    else:
+        return render_to_response('index.html')
 
 def usernamesuggestion(request):
     """
