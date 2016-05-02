@@ -265,3 +265,18 @@ def autodeploy(request):
     else:
         # To do Need to render correct Render
         render_to_response('password_reset.html', context_instance=RequestContext(request))
+
+def get_flavor(request):
+    if request.POST:
+        return request.POST.get('flavor', '')
+    else:
+        return request.GET.get('flavor', '')
+
+def logout_user(request):
+    flavor = get_flavor(request)
+    logout(request)
+    if flavor == 'android':
+        return HttpResponse(simplejson.dumps({'success': True, 'msg': "Logout_Success"}))
+    else:
+        return HttpResponseRedirect('/login')
+    
