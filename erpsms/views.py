@@ -155,7 +155,12 @@ def createuser(request):
         userobj.activation_key = activation_key
         userobj.key_expires = key_expires
         userobj.is_active = 0
-        userobj.save()
+        try:
+            userobj.save()
+        except Exception,e:
+            logger_stats.info('Error While saving the User Obj %s %s'%(email,e))
+            # The below code should work both Android and web as well
+            return simplejson.dumps({'Success':False, 'message': 'System not able to create user with this %s id'%(email)})     
         # Send email with activation key
         email_subject = 'Account confirmation'
         email_body = "Hey %s, thanks for signing up. To activate your account, click this link within \
