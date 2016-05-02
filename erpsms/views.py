@@ -38,7 +38,7 @@ def login_user(request):
         username = request.POST['username']
         password = request.POST['password']
         user = authenticate(username=username, password=password)
-        flavor = request.POST.get('flavor', '')
+        flavor = get_flavor(request)
         logger_stats.info('login username %s and flavor %s'%(username,flavor))
         if user:
             if user.is_active:
@@ -80,7 +80,7 @@ def googleauthrequest(request):
         return HttpResponseRedirect('allauth/accounts/google/login/')
 
 def signsuccess(request):
-    flavor = request.GET.get('flavor', '')
+    flavor = get_flavor(request)
     if flavor == 'android':
         return HttpResponse(simplejson.dumps({'success': True, 'msg': "Signin_Login_Success"}))
     else:
@@ -137,12 +137,19 @@ def usernamesuggestion(request):
 def createuser(request):
     username = password = ''
     if request.POST:
+        flavor = get_flavor(request)
         username = request.POST['email']
         password = request.POST['password']
         email = request.POST['email']
         salt = hashlib.sha1(str(random.random())).hexdigest()[:5]
         activation_key = hashlib.sha1(salt + email).hexdigest()
         key_expires = datetime.datetime.today() + datetime.timedelta(2)
+        userobj = CustomUser.objects.filter(email = email)
+        if userobj:
+            if flavor == 'android':
+                return simplejson.dumps({'Success':False, 'message': 'Email/Name %s already exist '%(email)}) 
+            return HttpResponse('Email/Name %s already exist '%(email) , content_type="text/plain")
+
         userobj = CustomUser(email=email, password=password)
         userobj.set_password(password)
         userobj.activation_key = activation_key
@@ -155,6 +162,9 @@ def createuser(request):
             48hours %s/accounts/confirm/%s" % (username, domain, activation_key)
         send_mail(email_subject, email_body, 'erp4forppl.com',
                   [email], fail_silently=False)
+        if flavor == 'android':
+            return simplejson.dumps({'Success':True, 'message': 'The Username: %s created Successfully , please check mail
+                                                                                  to activate'%(username)})
         return render_to_response('index.html')
     return render_to_response('login.html', context_instance=RequestContext(request))
 
