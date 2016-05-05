@@ -38,7 +38,7 @@ def login_user(request):
         username = request.POST['username']
         password = request.POST['password']
         user = authenticate(username=username, password=password)
-        flavor = request.POST.get('flavor', '')
+        flavor = get_flavor(request)
         logger_stats.info('login username %s and flavor %s'%(username,flavor))
         if user:
             if user.is_active:
@@ -65,13 +65,26 @@ def index(request):
     """
     pass
 
-def facebookauth(request):
+def facebookauthrequest(request):
     logger_stats.info('Facebook Auth Req %s'%(request))
     if request.user.is_authenticated():
         return HttpResponseRedirect(request.META['HTTP_REFERER'])
     else:
         return HttpResponseRedirect('allauth/accounts/facebook/login/')
 
+def googleauthrequest(request):
+    logger_stats.info('Google Auth Req %s'%(request))
+    if request.user.is_authenticated():
+        return HttpResponseRedirect(request.META['HTTP_REFERER'])
+    else:
+        return HttpResponseRedirect('allauth/accounts/google/login/')
+
+def signsuccess(request):
+    flavor = get_flavor(request)
+    if flavor == 'android':
+        return HttpResponse(simplejson.dumps({'success': True, 'msg': "Signin_Login_Success"}))
+    else:
+        return render_to_response('index.html')
 
 def usernamesuggestion(request):
     """
@@ -124,24 +137,39 @@ def usernamesuggestion(request):
 def createuser(request):
     username = password = ''
     if request.POST:
+        flavor = get_flavor(request)
         username = request.POST['email']
         password = request.POST['password']
         email = request.POST['email']
         salt = hashlib.sha1(str(random.random())).hexdigest()[:5]
         activation_key = hashlib.sha1(salt + email).hexdigest()
         key_expires = datetime.datetime.today() + datetime.timedelta(2)
+        userobj = CustomUser.objects.filter(email = email)
+        if userobj:
+            if flavor == 'android':
+                return simplejson.dumps({'Success':False, 'message': 'Email/Name %s already exist '%(email)}) 
+            return HttpResponse('Email/Name %s already exist '%(email) , content_type="text/plain")
+
         userobj = CustomUser(email=email, password=password)
         userobj.set_password(password)
         userobj.activation_key = activation_key
         userobj.key_expires = key_expires
         userobj.is_active = 0
-        userobj.save()
+        try:
+            userobj.save()
+        except Exception,e:
+            logger_stats.info('Error While saving the User Obj %s %s'%(email,e))
+            # The below code should work both Android and web as well
+            return simplejson.dumps({'Success':False, 'message': 'System not able to create user with this %s id'%(email)})     
         # Send email with activation key
         email_subject = 'Account confirmation'
         email_body = "Hey %s, thanks for signing up. To activate your account, click this link within \
             48hours %s/accounts/confirm/%s" % (username, domain, activation_key)
         send_mail(email_subject, email_body, 'erp4forppl.com',
                   [email], fail_silently=False)
+        if flavor == 'android':
+            return simplejson.dumps({'Success':True, 'message': 'The Username: %s created Successfully , please check mail
+                                                                                  to activate'%(username)})
         return render_to_response('index.html')
     return render_to_response('login.html', context_instance=RequestContext(request))
 
@@ -252,3 +280,18 @@ def autodeploy(request):
     else:
         # To do Need to render correct Render
         render_to_response('password_reset.html', context_instance=RequestContext(request))
+
+def get_flavor(request):
+    if request.POST:
+        return request.POST.get('flavor', '')
+    else:
+        return request.GET.get('flavor', '')
+
+def logout_user(request):
+    flavor = get_flavor(request)
+    logout(request)
+    if flavor == 'android':
+        return HttpResponse(simplejson.dumps({'success': True, 'msg': "Logout_Success"}))
+    else:
+        return HttpResponseRedirect('/login')
+    
