@@ -168,8 +168,7 @@ def createuser(request):
         send_mail(email_subject, email_body, 'erp4forppl.com',
                   [email], fail_silently=False)
         if flavor == 'android':
-            return simplejson.dumps({'Success':True, 'message': 'The Username: %s created Successfully , please check mail
-                                                                                  to activate'%(username)})
+            return simplejson.dumps({'Success':True, 'message': 'The Username: %s created Successfully , please check mail to activate'%(username)})
         return render_to_response('index.html')
     return render_to_response('login.html', context_instance=RequestContext(request))
 
