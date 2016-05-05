@@ -171,8 +171,9 @@ def createuser(request):
         email_subject = 'Account confirmation'
         email_body = "Hey %s, thanks for signing up. To activate your account, click this link within \
             48hours %s/accounts/confirm/%s" % (username, domain, activation_key)
-        send_mail(email_subject, email_body, 'erp4forppl.com',
-                  [email], fail_silently=False)
+        if '@'in email:
+            send_mail(email_subject, email_body, 'erp4forppl.com',
+                    [email], fail_silently=False)
         logger_stats.info('The Username: %s created Successfully , please check mail to activate'%(username))
         if flavor == 'android':
             return simplejson.dumps({'Success':True, 'message': 'The Username: %s created Successfully , please check mail to activate'%(username)})
