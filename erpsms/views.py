@@ -95,6 +95,7 @@ def usernamesuggestion(request):
         if email:
             usrobj = get_or_none(model=CustomUser, email=email)
             if not usrobj:
+                logger_stats.info('Username is Available %s '%(email))
                 return HttpResponse("Username is Available", content_type="text/plain")
                 # return "Username is Available"
             else:
@@ -105,8 +106,10 @@ def usernamesuggestion(request):
                     is_valid = validate_email(email)
                     if is_valid:
                         returnmsg = "Entered Email ID already taken "
+                        logger_stats.info('Entered Email ID already taken  %s '%(email))
                         return HttpResponse(returnmsg, content_type="text/plain")
                     returnmsg = "Email is not in correct format"
+                    logger_stats.info('Email is not in correct format  %s '%(email))
                     return HttpResponse(returnmsg, content_type="text/plain")
                 returnmsg = "Entered username already taken " + email
                 numlist = re.findall(r'\d+', email)
@@ -120,6 +123,7 @@ def usernamesuggestion(request):
                         if not usrobj:
                             returnmsg += ' Available username is ' + \
                                          email + newusername
+                            logger_stats.info(returnmsg)
                             return HttpResponse(returnmsg, content_type="text/plain")
                 else:
                     startno = 0
@@ -130,6 +134,7 @@ def usernamesuggestion(request):
                         if usrobj is None:
                             returnmsg += ' Available username is ' + \
                                          email + str(startno)
+                            logger_stats.info(returnmsg)
                             return HttpResponse(returnmsg, content_type="text/plain")
     return render_to_response('login.html', context_instance=RequestContext(request))
 
@@ -146,6 +151,7 @@ def createuser(request):
         key_expires = datetime.datetime.today() + datetime.timedelta(2)
         userobj = CustomUser.objects.filter(email = email)
         if userobj:
+            logger_stats.info('Email/Name %s already exist '%(email))
             if flavor == 'android':
                 return simplejson.dumps({'Success':False, 'message': 'Email/Name %s already exist '%(email)}) 
             return HttpResponse('Email/Name %s already exist '%(email) , content_type="text/plain")
@@ -167,6 +173,7 @@ def createuser(request):
             48hours %s/accounts/confirm/%s" % (username, domain, activation_key)
         send_mail(email_subject, email_body, 'erp4forppl.com',
                   [email], fail_silently=False)
+        logger_stats.info('The Username: %s created Successfully , please check mail to activate'%(username))
         if flavor == 'android':
             return simplejson.dumps({'Success':True, 'message': 'The Username: %s created Successfully , please check mail to activate'%(username)})
         return render_to_response('index.html')
