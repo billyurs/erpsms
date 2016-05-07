@@ -131,7 +131,7 @@ def usernamesuggestion(request):
                         startno += 1
                         usrobj = get_or_none(
                             model=CustomUser, email=email + str(startno))
-                        if usrobj is None:
+                        if not usrobj:
                             returnmsg += ' Available username is ' + \
                                          email + str(startno)
                             logger_stats.info(returnmsg)
