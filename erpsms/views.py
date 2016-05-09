@@ -121,7 +121,7 @@ def usernamesuggestion(request):
                         usrobj = get_or_none(
                             model=CustomUser, email=email + newusername)
                         if not usrobj:
-                            returnmsg += ' Available username is ' + \
+                            returnmsg += '\n Available username is ' + \
                                          email + newusername
                             logger_stats.info(returnmsg)
                             return HttpResponse(returnmsg, content_type="text/plain")
@@ -132,7 +132,7 @@ def usernamesuggestion(request):
                         usrobj = get_or_none(
                             model=CustomUser, email=email + str(startno))
                         if not usrobj:
-                            returnmsg += ' Available username is ' + \
+                            returnmsg += '\n Available username is ' + \
                                          email + str(startno)
                             logger_stats.info(returnmsg)
                             return HttpResponse(returnmsg, content_type="text/plain")
@@ -158,9 +158,12 @@ def createuser(request):
 
         userobj = CustomUser(email=email, password=password)
         userobj.set_password(password)
+        if '@' in email:
+            userobj.is_active = 0
+        else:
+            userobj.is_active = 1
         userobj.activation_key = activation_key
         userobj.key_expires = key_expires
-        userobj.is_active = 0
         try:
             userobj.save()
         except Exception,e:
