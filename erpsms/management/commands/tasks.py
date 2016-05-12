@@ -1,7 +1,8 @@
 # File to run the cron
 from common.communicators import sendemail
+from django.core.management.base import BaseCommand, CommandError
 import datetime
-import settings
+import erpsms.settings
 import os
 def dailyLogReport():
 	workingdir = os.getcwd()
@@ -13,9 +14,13 @@ def dailyLogReport():
 	emailsub = 'Daily log report [erpms, erpsms_stats]'
 	DateTime = ('Current Datetime %s'%(datetime.datetime.now()))
 	emailbody = 'Report Generated DateTime: %s'%(DateTime)
-	to_mail = settings.DEFAULT_FROM_EMAIL
+	to_mail = erpsms.settings.DEFAULT_FROM_EMAIL
 	attachmentlist = [erpsmsfilepath,erpsms_statsfilepath]
 	sendemail(emailsub,emailbody,'',to_mail,attachmentlist)
 
-if __name__ == "__main__":
-	dailyLogReport()
+
+
+class Command(BaseCommand):
+
+	def handle(self, *args, **options):
+		dailyLogReport()
