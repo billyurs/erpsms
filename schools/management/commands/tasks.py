@@ -10,7 +10,7 @@ def dailyLogReport():
 	erpsmsfilepath = '%s/erpsms/logs/erpsms.log'%(workingdir)
 	erpsmsfilepath = '' if not os.path.isfile(erpsmsfilepath) else erpsmsfilepath
 	erpsms_statsfilepath = '%s/erpsms/logs/erpsms_stats.log'%(workingdir)
-	erpsms_statsfilepath = '' if not os.path.isfile(erpsms_statsfilepath) else erpsmsfilepath
+	erpsms_statsfilepath = '' if not os.path.isfile(erpsms_statsfilepath) else erpsms_statsfilepath
 	emailsub = 'Daily log report [erpms, erpsms_stats]'
 	DateTime = ('Current Datetime %s'%(datetime.datetime.now()))
 	emailbody = 'Report Generated DateTime: %s'%(DateTime)
