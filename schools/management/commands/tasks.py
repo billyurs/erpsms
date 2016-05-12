@@ -16,9 +16,12 @@ def dailyLogReport():
 	emailbody = 'Report Generated DateTime: %s'%(DateTime)
 	to_mail = erpsms.settings.DEFAULT_FROM_EMAIL
 	attachmentlist = [erpsmsfilepath,erpsms_statsfilepath]
-	sendemail(emailsub,emailbody,'',to_mail,attachmentlist)
-
-
+	try:
+		sendemail(emailsub,emailbody,'',to_mail,attachmentlist)
+		open(erpsmsfilepath, 'w').close()
+		open(erpsms_statsfilepath, 'w').close()
+	except:
+		pass
 
 class Command(BaseCommand):
 
