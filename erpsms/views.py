@@ -17,9 +17,11 @@ from common import erpsms_json as simplejson
 import settings
 import os
 from django.views.decorators.csrf import ensure_csrf_cookie
+
 logger = logging.getLogger('erpsms')
 logger_stats = logging.getLogger('erpsms_stats')
 from django.views.decorators.csrf import csrf_protect
+
 domain = settings.domain
 
 
@@ -39,11 +41,11 @@ def login_user(request):
         password = request.POST['password']
         user = authenticate(username=username, password=password)
         flavor = get_flavor(request)
-        logger_stats.info('login username %s and flavor %s'%(username,flavor))
+        logger_stats.info('login username %s and flavor %s' % (username, flavor))
         if user:
             if user.is_active:
                 login(request, user)
-                logger_stats.info('Logged in successfully , user %s and flavor %s'%(username,flavor))
+                logger_stats.info('Logged in successfully , user %s and flavor %s' % (username, flavor))
                 if flavor == 'android':
                     return HttpResponse(simplejson.dumps({'success': True, 'msg': "Login Success"}))
                 return render_to_response('form.html', {}, context_instance=RequestContext(request))
@@ -65,19 +67,22 @@ def index(request):
     """
     pass
 
+
 def facebookauthrequest(request):
-    logger_stats.info('Facebook Auth Req %s'%(request))
+    logger_stats.info('Facebook Auth Req %s' % (request))
     if request.user.is_authenticated():
         return HttpResponseRedirect(request.META['HTTP_REFERER'])
     else:
         return HttpResponseRedirect('allauth/accounts/facebook/login/')
 
+
 def googleauthrequest(request):
-    logger_stats.info('Google Auth Req %s'%(request))
+    logger_stats.info('Google Auth Req %s' % (request))
     if request.user.is_authenticated():
         return HttpResponseRedirect(request.META['HTTP_REFERER'])
     else:
         return HttpResponseRedirect('allauth/accounts/google/login/')
+
 
 def signsuccess(request):
     flavor = get_flavor(request)
@@ -85,6 +90,7 @@ def signsuccess(request):
         return HttpResponse(simplejson.dumps({'success': True, 'msg': "Signin_Login_Success"}))
     else:
         return render_to_response('index.html')
+
 
 def usernamesuggestion(request):
     """
@@ -95,7 +101,7 @@ def usernamesuggestion(request):
         if email:
             usrobj = get_or_none(model=CustomUser, email=email)
             if not usrobj:
-                logger_stats.info('Username is Available %s '%(email))
+                logger_stats.info('Username is Available %s ' % (email))
                 return HttpResponse("Username is Available", content_type="text/plain")
                 # return "Username is Available"
             else:
@@ -106,10 +112,10 @@ def usernamesuggestion(request):
                     is_valid = validate_email(email)
                     if is_valid:
                         returnmsg = "Entered Email ID already taken "
-                        logger_stats.info('Entered Email ID already taken  %s '%(email))
+                        logger_stats.info('Entered Email ID already taken  %s ' % (email))
                         return HttpResponse(returnmsg, content_type="text/plain")
                     returnmsg = "Email is not in correct format"
-                    logger_stats.info('Email is not in correct format  %s '%(email))
+                    logger_stats.info('Email is not in correct format  %s ' % (email))
                     return HttpResponse(returnmsg, content_type="text/plain")
                 returnmsg = "Entered username already taken " + email
                 numlist = re.findall(r'\d+', email)
@@ -149,12 +155,13 @@ def createuser(request):
         salt = hashlib.sha1(str(random.random())).hexdigest()[:5]
         activation_key = hashlib.sha1(salt + email).hexdigest()
         key_expires = datetime.datetime.today() + datetime.timedelta(2)
-        userobj = CustomUser.objects.filter(email = email)
+        userobj = CustomUser.objects.filter(email=email)
         if userobj:
-            logger_stats.info('Email/Name %s already exist '%(email))
+            logger_stats.info('Email/Name %s already exist ' % (email))
             if flavor == 'android':
-                return simplejson.dumps({'Success':False, 'message': 'Email/Name %s already exist '%(email)}) 
-            return HttpResponse('Email/Name %s already exist '%(email) , content_type="text/plain")
+                return HttpResponse(
+                    simplejson.dumps({'Success': False, 'message': 'Email/Name %s already exist ' % (email)}))
+            return HttpResponse('Email/Name %s already exist ' % (email), content_type="text/plain")
 
         userobj = CustomUser(email=email, password=password)
         userobj.set_password(password)
@@ -166,20 +173,23 @@ def createuser(request):
         userobj.key_expires = key_expires
         try:
             userobj.save()
-        except Exception,e:
-            logger_stats.info('Error While saving the User Obj %s %s'%(email,e))
+        except Exception, e:
+            logger_stats.info('Error While saving the User Obj %s %s' % (email, e))
             # The below code should work both Android and web as well
-            return simplejson.dumps({'Success':False, 'message': 'System not able to create user with this %s id'%(email)})     
-        # Send email with activation key
+            return simplejson.dumps(
+                {'Success': False, 'message': 'System not able to create user with this %s id' % (email)})
+            # Send email with activation key
         email_subject = 'Account confirmation'
         email_body = "Hey %s, thanks for signing up. To activate your account, click this link within \
             48hours %s/accounts/confirm/%s" % (username, domain, activation_key)
-        if '@'in email:
+        if '@' in email:
             send_mail(email_subject, email_body, 'erp4forppl.com',
-                    [email], fail_silently=False)
-        logger_stats.info('The Username: %s created Successfully , please check mail to activate'%(username))
+                      [email], fail_silently=False)
+        logger_stats.info('The Username: %s created Successfully , please check mail to activate' % (username))
         if flavor == 'android':
-            return simplejson.dumps({'Success':True, 'message': 'The Username: %s created Successfully , please check mail to activate'%(username)})
+            return HttpResponse(simplejson.dumps({'Success': True,
+                                                  'message': 'The Username: %s created Successfully , please check mail to activate' % (
+                                                  username)}))
         return render_to_response('index.html')
     return render_to_response('login.html', context_instance=RequestContext(request))
 
@@ -273,9 +283,9 @@ def autodeploy(request):
         try:
             if python_package:
                 pip.main(['install', python_package])
-                logger_stats.info('Python package installed successfully %s '%(python_package))
+                logger_stats.info('Python package installed successfully %s ' % (python_package))
         except Exception, e:
-             logger_stats.info('Exception during installing the python package %s and error : %s'%(python_package,e))
+            logger_stats.info('Exception during installing the python package %s and error : %s' % (python_package, e))
         # Path of WSGI File
         fname = '/var/www/erpforppl_pythonanywhere_com_wsgi.py'
         if os.path.exists(fname):
@@ -291,11 +301,13 @@ def autodeploy(request):
         # To do Need to render correct Render
         render_to_response('password_reset.html', context_instance=RequestContext(request))
 
+
 def get_flavor(request):
     if request.POST:
         return request.POST.get('flavor', '')
     else:
         return request.GET.get('flavor', '')
+
 
 def logout_user(request):
     flavor = get_flavor(request)
@@ -304,4 +316,3 @@ def logout_user(request):
         return HttpResponse(simplejson.dumps({'success': True, 'msg': "Logout_Success"}))
     else:
         return HttpResponseRedirect('/login')
-    
