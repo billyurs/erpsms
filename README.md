@@ -28,3 +28,4 @@ smmap==0.9.0
 ujson==1.35
 validate-email==1.3
 wheel==0.26.0
+redislite==3.0.296
