@@ -59,12 +59,13 @@ def login_user(request):
     return render_to_response('login.html', {}, context_instance=RequestContext(request))
 
 
-def index(request):
+def getuserparameters(request):
     """
     :param request:
-    :return:
-    Test method
+    :return: The set of active departments active to user
     """
+    #import redis
+
     pass
 
 
