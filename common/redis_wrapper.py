@@ -6,7 +6,10 @@ redisremote = REDIS_REMOTE_SUPPORT
 
 
 class RedisWrapper():
-    def __init__():
+    def __init__(self):
+        pass
+
+    def getredisconnection(self):
         if redisremote:
             self.redis_connection = redis.Redis(
                 host='redis-17602.us-east-1-4.3.ec2.garantiadata.com',
@@ -16,5 +19,4 @@ class RedisWrapper():
         else:
         	workingdir = os.getcwd()
         	self.redis_connection = Redis('%s/data/redis.db' % (workingdir))
-        	if redis_connection:
-            	return self.redis_connection
+        	return self.redis_connection
