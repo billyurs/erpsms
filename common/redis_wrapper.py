@@ -1,15 +1,20 @@
 from redislite import Redis
 import os
+import redis
+from erpsms.settings import REDIS_REMOTE_SUPPORT
+redisremote = REDIS_REMOTE_SUPPORT
+
 
 class RedisWrapper():
-	def __init__py():
-		pass
-
-	def getredisconnection(self):
-		"""
-		Returns the redis cache connection
-		"""
-		workingdir = os.getcwd()
-		redis_connection = Redis('%s/data/redis.db'%(workingdir))
-		if redis_connection:
-			return redis_connection
+    def __init__():
+        if redisremote:
+            self.redis_connection = redis.Redis(
+                host='redis-17602.us-east-1-4.3.ec2.garantiadata.com',
+                port='17602',
+                password='haihai1818')
+            return self.redis_connection
+        else:
+        	workingdir = os.getcwd()
+        	self.redis_connection = Redis('%s/data/redis.db' % (workingdir))
+        	if redis_connection:
+            	return self.redis_connection
