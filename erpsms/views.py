@@ -17,13 +17,15 @@ from common import erpsms_json as simplejson
 import settings
 import os
 from django.views.decorators.csrf import ensure_csrf_cookie
+from common.redis_wrapper import RedisWrapper
 
 logger = logging.getLogger('erpsms')
 logger_stats = logging.getLogger('erpsms_stats')
 from django.views.decorators.csrf import csrf_protect
 
 domain = settings.domain
-
+redisobj = RedisWrapper()
+rediscon = redisobj.getredisconnection()
 
 def home(request):
     context = RequestContext(request,
@@ -47,7 +49,8 @@ def login_user(request):
                 login(request, user)
                 logger_stats.info('Logged in successfully , user %s and flavor %s' % (username, flavor))
                 if flavor == 'android':
-                    return HttpResponse(simplejson.dumps({'success': True, 'msg': "Login Success"}))
+                    userdata = getuserparameters(request)
+                    return HttpResponse(simplejson.dumps({'success': True, 'msg': "Login Success",'userdata':userdata}))
                 return render_to_response('form.html', {}, context_instance=RequestContext(request))
         else:
             if flavor == 'android':
@@ -59,13 +62,31 @@ def login_user(request):
     return render_to_response('login.html', {}, context_instance=RequestContext(request))
 
 
-def index(request):
+def getuserparameters(request):
     """
     :param request:
-    :return:
-    Test method
+    :return: The set of active departments active to user
     """
-    pass
+    cache_key = '%s'%(request.user)
+    userjson = {}
+    if cache_key:
+        userdata = rediscon.get(cache_key)
+        if not userdata:
+            userdata = {}
+            userjson['firstname'] = request.user.first_name
+            userjson['username'] = request.user.username
+            userjson['lastname'] = request.user.last_name
+            userjson['email'] = request.user.email
+            userjson['tenant'] = request.user.tenantid
+            userdata['profile_data'] = userjson
+            departjson = {}
+            userdata['department'] = departjson
+            userdata['gallery'] = {}
+            userdata['events'] = {}
+            userdata['meta'] = {}
+            rediscon.set(cache_key,userdata)
+        logger_stats.info('%s Cache key \t%s cache value\t'%(cache_key,userdata))
+        return simplejson.dumps(userdata)
 
 
 def facebookauthrequest(request):
