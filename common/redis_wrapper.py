@@ -3,7 +3,8 @@ import os
 import redis
 from erpsms.settings import REDIS_REMOTE_SUPPORT
 redisremote = REDIS_REMOTE_SUPPORT
-
+import logging
+logger_stats = logging.getLogger('erpsms_stats')
 
 class RedisWrapper():
     def __init__(self):
@@ -18,5 +19,6 @@ class RedisWrapper():
             return self.redis_connection
         else:
         	workingdir = os.getcwd()
-        	self.redis_connection = Redis('%s/data/redis.db' % (workingdir))
+        	logger_stats.info('Redis path :\t %s/erpsms/data/redis.db' % (workingdir))
+        	self.redis_connection = Redis('%s/erpsms/data/redis.db' % (workingdir))
         	return self.redis_connection
