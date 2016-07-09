@@ -9,7 +9,8 @@ PROJECT_PATH = os.path.abspath(os.path.dirname(__file__))
 STATIC_PATH = PROJECT_PATH
 urlpatterns = patterns('',
                        # Examples:
-                       (r'^login$', 'erpsms.views.login_user'),
+                       (r'^login', 'erpsms.views.login_user'),
+                       (r'^dummy', 'erpsms.views.dummy'),
                        (r'^createuser$', 'erpsms.views.createuser'),
                        (r'^password_reset_req_activationkey$', 'erpsms.views.password_reset_send_activation_key'),
                        (r'^$', 'erpsms.views.home'),
