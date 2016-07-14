@@ -41,7 +41,6 @@ def http_basic_auth(func):
     @wraps(func)
     def _decorator(request, *args, **kwargs):
         from django.contrib.auth import authenticate, login
-        import pdb; pdb.set_trace()
         if request.META.has_key('HTTP_AUTHORIZATION'):
             authmeth, auth = request.META['HTTP_AUTHORIZATION'].split(' ', 1)
             if authmeth.lower() == 'basic':

@@ -19,6 +19,6 @@ class RedisWrapper():
             return self.redis_connection
         else:
         	workingdir = os.getcwd()
-        	logger_stats.info('Redis path :\t %s/data/redis.db' % (workingdir))
-        	self.redis_connection = Redis('%s/data/redis.db' % (workingdir))
+        	logger_stats.info('Redis path :\t %s erpsms/data/redis.db' % (workingdir))
+        	self.redis_connection = Redis('%s/erpsms/data/redis.db' % (workingdir))
         	return self.redis_connection
