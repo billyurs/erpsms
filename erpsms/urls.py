@@ -3,7 +3,10 @@ from django.views.generic import RedirectView, TemplateView
 from django.contrib import admin
 admin.autodiscover()
 import os
-from erpsms.views import *
+try:
+    from erpsms.views import *
+except:
+    from views import *
 from django.conf import settings
 PROJECT_PATH = os.path.abspath(os.path.dirname(__file__))
 STATIC_PATH = PROJECT_PATH

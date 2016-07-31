@@ -7,7 +7,9 @@ from datetime import datetime
 import urllib2
 import copy
 import traceback
-
+import logging
+logger = logging.getLogger('erpsms')
+logger_stats = logging.getLogger('erpsms_stats')
 redisobj = RedisWrapper()
 rediscon = redisobj.getredisconnection()
 
@@ -17,7 +19,7 @@ def weatherAPICall(urlreq):
 
 
 def current_time_to_string(systemtime):
-    current_time = ('%s' % (systemtime.split('.')[0]))
+    current_time =('%s' % (systemtime)).split('.')[0]
     current_time_text = datetime.fromtimestamp(
         int(current_time)).strftime('%Y-%m-%d %H')
     return current_time_text
@@ -28,7 +30,7 @@ def get_place_name_by_lat_long(lat,lon):
     response = urllib2.urlopen(req_url)
     place_response = simplejson.loads(response.read())
     if place_response.get('status') == 'OK':
-        place_name = place_response['results'][0]['address_components'][0]['long_name']
+        place_name = place_response['results'][1]['address_components'][0]['long_name']
     return place_name
 
 
@@ -38,6 +40,7 @@ def getweatherdetailsparser(request):
         if not forcast:
             forcast = request.GET.get('hourly', '')
         place_name_text = request.GET.get('place', '')
+        import pdb; pdb.set_trace()
         latitude = request.GET.get('lat', '')
         longitutde = request.GET.get('lon', '')
         if not place_name_text:
@@ -46,7 +49,7 @@ def getweatherdetailsparser(request):
         current_time = current_time_to_string(time.time())
         if place_name_text:
             cache_key = place_name_text + '_' + current_time
-            cache_dict = rediscon.get(cache_key, {})
+            cache_dict = rediscon.get(cache_key)
             if not cache_dict:
                 req_url = 'http://api.openweathermap.org/data/2.5/forecast/' + forcast + \
                           '?q=' + place_name_text + '&mode=json&units=metric&cnt=7&appid=' \
@@ -67,10 +70,13 @@ def getweatherdetailsparser(request):
             else:
                 response_to_client = formweatherjson(cache_dict('list', ''))
         else:
+            logger_stats.critical('%s\t%s\t%s\t%s\t'%('Not Able to retrieve place name', '',request.GET,''))
             return HttpResponse(simplejson.dumps({'Status':'Failed','Reason':'Not Able to retrieve place name'}))
+        logger_stats.info('%s\t%s\t%s\t%s\t'%(response_to_client,request.GET,'',''))
         return HttpResponse(simplejson.dumps(response_to_client))
     except:
         formatted_lines = traceback.format_exc().splitlines()
+        logger_stats.critical('%s\t%s\t%s\t%s\t'%(formatted_lines, '',request.GET,''))
         return HttpResponse(simplejson.dumps({'Status': 'Failed', 'Reason': 'Exception Occured at Server End',
                                               'Exception': formatted_lines}))
 
@@ -81,8 +87,8 @@ def formweatherjson(weatherdetails):
         systemtime = weatherdetobj.get('dt', 0)
         systemtime_text = current_time_to_string(systemtime)
         responsejson['time'] = systemtime_text
-        responsejson['main'] = weatherdetobj.get('weather', {}).get('main', '')
-        responsejson['description'] = weatherdetobj.get('weather', {}).get('description', '')
+        responsejson['main'] = weatherdetobj.get('weather', {})[0].get('main', '')
+        responsejson['description'] = weatherdetobj.get('weather', {})[0].get('description', '')
         tempdict = weatherdetobj.get('temp', {})
         if tempdict:
             # Client opts for whole day
