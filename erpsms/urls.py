@@ -43,3 +43,6 @@ urlpatterns = patterns('',
 if 'schools' in settings.INSTALLED_APPS:
     urlpatterns += patterns('', url(r'^schools', include('schools.urls')))
 
+if 'api' in settings.INSTALLED_APPS:
+    urlpatterns += patterns('', url(r'^api', include('api.urls')))
+
