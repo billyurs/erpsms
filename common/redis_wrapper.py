@@ -1,8 +1,6 @@
 from redislite import Redis
 import os
 import redis
-from erpsms.settings import REDIS_REMOTE_SUPPORT
-redisremote = REDIS_REMOTE_SUPPORT
 import logging
 logger_stats = logging.getLogger('erpsms_stats')
 

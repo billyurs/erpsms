@@ -10,8 +10,8 @@ import traceback
 import logging
 logger = logging.getLogger('erpsms')
 logger_stats = logging.getLogger('erpsms_stats')
-redisobj = RedisWrapper()
-rediscon = redisobj.getredisconnection()
+from django.core.cache import  get_cache
+rediscon = get_cache('localcache')
 
 
 def weatherAPICall(urlreq):
@@ -40,7 +40,6 @@ def getweatherdetailsparser(request):
         if not forcast:
             forcast = request.GET.get('hourly', '')
         place_name_text = request.GET.get('place', '')
-        import pdb; pdb.set_trace()
         latitude = request.GET.get('lat', '')
         longitutde = request.GET.get('lon', '')
         if not place_name_text:
@@ -49,6 +48,7 @@ def getweatherdetailsparser(request):
         current_time = current_time_to_string(time.time())
         if place_name_text:
             cache_key = place_name_text + '_' + current_time
+            import pdb; pdb.set_trace()
             cache_dict = rediscon.get(cache_key)
             if not cache_dict:
                 req_url = 'http://api.openweathermap.org/data/2.5/forecast/' + forcast + \

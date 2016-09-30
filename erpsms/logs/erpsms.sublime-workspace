@@ -1,0 +1,530 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"ac",
+				"action	Attr"
+			],
+			[
+				"pas",
+				"password"
+			],
+			[
+				"user",
+				"username	statement"
+			],
+			[
+				"activation",
+				"activation_key"
+			],
+			[
+				"password",
+				"password_reset"
+			],
+			[
+				"is",
+				"is_active"
+			],
+			[
+				"set",
+				"set_trace	function"
+			],
+			[
+				"arilie",
+				"airlinecharge"
+			],
+			[
+				"airline",
+				"airlinecharge"
+			],
+			[
+				"pd",
+				"pdb"
+			],
+			[
+				"r",
+				"HttpResponse"
+			],
+			[
+				"pr",
+				"productname"
+			],
+			[
+				"fare",
+				"fareobj"
+			]
+		]
+	},
+	"buffers":
+	[
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 222.0,
+		"last_filter": "prett",
+		"selected_items":
+		[
+			[
+				"prett",
+				"Pretty JSON: Minify (compress) JSON"
+			],
+			[
+				"json",
+				"Pretty JSON: Format (Pretty Print) JSON"
+			],
+			[
+				"anaconda",
+				"Anaconda: Autoformat PEP8 Errors"
+			],
+			[
+				"pep 8",
+				"Anaconda: Autoformat PEP8 Errors"
+			],
+			[
+				"Package Control: in",
+				"Package Control: Install Package"
+			],
+			[
+				"install package",
+				"Package Control: Advanced Install Package"
+			],
+			[
+				"insta",
+				"Package Control: Install Package"
+			],
+			[
+				"python",
+				"Build With: Python - Syntax Check"
+			],
+			[
+				"jso",
+				"Pretty JSON: Format (Pretty Print) JSON"
+			],
+			[
+				"js",
+				"Pretty JSON: Validate"
+			]
+		],
+		"width": 449.0
+	},
+	"console":
+	{
+		"height": 0.0,
+		"history":
+		[
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/home/madhu/.config/sublime-text-3/Packages/Default/Preferences.sublime-settings",
+		"/home/madhu/workspacepersonal/erpsms/erpsms/settings.py",
+		"/home/madhu/workspacepersonal/erpsms/erpsms/views.py",
+		"/home/madhu/workspacepersonal/erpsms/registration/admin.py",
+		"/home/madhu/workspacepersonal/ace/Demo_pass_reset.html",
+		"/home/madhu/workspacepersonal/erpsms/erpsms/templates/login.html",
+		"/home/madhu/workspacepersonal/erpsms/erpsms/templates/password_reset.html",
+		"/home/madhu/workspacepersonal/erpsms/registration/models.py",
+		"/home/madhu/workspacepersonal/erpsms/schools/views.py",
+		"/home/madhu/workspacepersonal/erpsms/erpsms/templates/form.html",
+		"/home/madhu/workspacepersonal/erpsms/erpsms/logs/erpsms.log",
+		"/home/madhu/workspace_b2b/goibibo/travelibibo/flight/views.py",
+		"/home/madhu/Downloads/settings (8).py",
+		"/media/madhu/airtel/AutoRun.exe",
+		"/home/madhu/workspacepersonal/ace/form.html",
+		"/home/madhu/workspacepersonal/erpsms/erpsms/urls.py",
+		"/home/madhu/Downloads/sit/views.py",
+		"/home/madhu/workspacepersonal/demo.html",
+		"/home/madhu/workspacepersonal/erpsms/erpsms/demo.js",
+		"/home/madhu/workspacepersonal/ace/login.html",
+		"/home/madhu/workspacepersonal/ace/password_reset.html",
+		"/home/madhu/workspacepersonal/ace/demo.html",
+		"/home/madhu/workspacepersonal/react-0.11.2/demo.html",
+		"/home/madhu/Downloads/kishore/sit/templates/index.html",
+		"/home/madhu/workspace_b2b/goibibo/travelibibo/flight/templatetags/eticketfarebreackup.py",
+		"/home/madhu/Downloads/LearnNextSetup.exe",
+		"/home/madhu/Downloads/kishore/sit/forms.py",
+		"/home/madhu/.config/sublime-text-3/Packages/Package Control/Package Control.sublime-settings",
+		"/home/madhu/.config/sublime-text-3/Packages/User/Python.sublime-settings",
+		"/home/madhu/.config/sublime-text-3/Packages/Anaconda/Anaconda.sublime-settings",
+		"/home/madhu/.config/sublime-text-3/Packages/Pep8Lint/Pep8Lint.sublime-settings",
+		"/home/madhu/.config/sublime-text-3/Packages/User/Pep8Lint.sublime-settings",
+		"/home/madhu/.config/sublime-text-3/Packages/Pep8Lint/Default (Linux).sublime-keymap",
+		"/home/madhu/Downloads/kishore/sit/views.py",
+		"/home/madhu/Downloads/newsite/static/admin/css/base.css",
+		"/home/madhu/.config/sublime-text-3/Packages/Pretty JSON/Pretty JSON.sublime-settings",
+		"/home/madhu/workspacepersonal/PNR.txt",
+		"/home/madhu/workspacepersonal/OUTPNR.txt",
+		"/home/madhu/Downloads/src/skillshare",
+		"/home/madhu/workspacepersonal/groceryapp/GroceryApp/GroceryApp/urls.py",
+		"/home/madhu/workspacepersonal/groceryapp/GroceryApp/GroceryApp/grocery/views.py",
+		"/home/madhu/workspace_b2b/goibibo/travelibibo/urls.py",
+		"/home/madhu/workspace_b2b/goibibo/travelibibo/urls",
+		"/home/madhu/workspacepersonal/GroceryApp/GroceryApp/GroceryApp/groceryparser/views.py",
+		"/home/madhu/workspace_b2b/goibibo/behind",
+		"/home/madhu/workspace_b2b/goibibo/travelibibo/flight/data/IATADatabase.py",
+		"/home/madhu/workspace_b2b/goibibo/travelibibo/settings_latest_citi.py",
+		"/home/madhu/workspacepersonal/GroceryApp/GroceryApp/GroceryApp/views.py",
+		"/home/madhu/workspacepersonal/grocerryforest/groceryworld/groceryworld/settings.py",
+		"/home/madhu/workspacepersonal/grocerryforest/groceryworld/groceryworld/urls.py",
+		"/home/madhu/Downloads/kishore/urls.py",
+		"/home/madhu/Downloads/kishore/sit/urls.py",
+		"/home/madhu/Demomadhu/cancelCommon.html",
+		"/home/madhu/Downloads/way2sms.py",
+		"/home/madhu/Downloads/pycharm-4.5.4/helpers/pydev/pydevd_attach_to_process/_always_live_program.py",
+		"/home/madhu/workspacepersonal/GroceryApp/GroceryApp/GroceryApp/__init__.py",
+		"/home/madhu/Downloads/goibibo_flight.git/flight/admin.py",
+		"/home/madhu/workspace_b2b/goibibo/travelibibo/common/views.py",
+		"/home/madhu/01Oct/goibibo/travelibibo/flight/views.py",
+		"/home/madhu/workspace_b2b/goibibo/manage.py",
+		"/home/madhu/workspace_b2b/goibibo/travelibibo/flight/ticketchanger/views.py",
+		"/home/madhu/workspace_b2b/goibibo/travelibibo/flight/modifstruct.py",
+		"/home/madhu/workspace_b2b/goibibo/travelibibo/flight/refundApi.py",
+		"/home/madhu/FixedTemplateIssue/goibibo/travelibibo/common/views.py",
+		"/home/madhu/workspace_b2b/goibibo/travelibibo/html/js/v2/goibibo_cancel.js",
+		"/home/madhu/workspace_b2b/goibibo/travelibibo/html/templates/v2/flight/cancelCommon.html",
+		"/home/madhu/workspace_b2b/goibibo/b/travelibibo/html/js/v2/goibibo_cancel.js",
+		"/home/madhu/a.html",
+		"/home/madhu/Documents/settings_citi.py",
+		"/home/madhu/Downloads/JetBrains PyCharm Pro 4.5.2 Activate License__12590_il13483.exe",
+		"/home/madhu/workspace_b2b/goibibo/travelibibo/settings_goibibo.py",
+		"/home/madhu/Demomadhu/air_files/SANDBOX_1.0/New folder/Sandbox_Deployment_profile.conf",
+		"/home/madhu/workspace_b2b/goibibo/.git/info/exclude",
+		"/home/madhu/Desktop/latest.diff",
+		"/home/madhu/workspace_b2b/goibibo/travelibibo/html/templates/citi/registration/custom_password_reset_email.html",
+		"/home/madhu/.local/share/Trash/files/profiles.2/urls.py",
+		"/home/madhu/Downloads/goibibo_flight.git/run.py",
+		"/home/madhu/OriginTempleBookingNewpage.html",
+		"/home/madhu/workspace_b2b/goibibo/travelibibo/html/templates/flight/flightSearchResult.html",
+		"/home/madhu/workspace_b2b/goibibo/travelibibo/travelb2b/templates/v2/profiles/group_profile.html",
+		"/home/madhu/workspace_b2b/goibibo/travelibibo/hotelsnew/templates/hotelsnew/index.html",
+		"/home/madhu/workspace_b2b/goibibo/travelibibo/flight/smsFeeds.py",
+		"/home/madhu/workspace_b2b/goibibo/travelibibo/flight/templatetags/utils.py",
+		"/home/madhu/FixedTemplateIssue/goibibo/travelibibo/flight/gds_refund_claim.py",
+		"/home/madhu/FixedTemplateIssue/goibibo/travelibibo/flight/admin.py",
+		"/home/madhu/.gitignore",
+		"/home/madhu/workspace_b2b/goibibo/travelibibo/html/templates/citi/flight/mails/newEmailTemplateBase.html",
+		"/home/madhu/workspace_b2b/goibibo/travelibibo/html/templates/citi/flight/mails/DomflightRefundNotify.html",
+		"/home/madhu/workspace_b2b/goibibo/.gitignore",
+		"/home/madhu/Downloads/goibibo_flight.git/flight/models.py",
+		"/home/madhu/workspace_b2b/goibibo/travelibibo/cab/templates/cab/index.html",
+		"/home/madhu/Documents/IssueQueue",
+		"/home/madhu/Downloads/settings (5).py",
+		"/home/madhu/workspace_b2b/goibibo/travelibibo/settings.py",
+		"/home/madhu/Documents/Live Dump/file1.sql",
+		"/home/madhu/Documents/Live Dump/file4.sql",
+		"/home/madhu/Documents/Live Dump/file2.sql",
+		"/home/madhu/Documents/Live Dump/file3.sql",
+		"/home/madhu/Downloads/winmail.dat",
+		"/home/madhu/Demomadhu/air_files/SANDBOX_1.0/Sandbox_Deployment_profile.conf",
+		"/home/madhu/Demomadhu/air_files/simplex_con_profile_files_1.5_build/Simplex_Deployment_profile.conf",
+		"/travelibibo/lib/customer_support/views.py",
+		"/home/madhu/workspace_b2b/goibibo/b/travelibibo/lib/customer_support/views.py",
+		"/home/madhu/Downloads/setup.exe",
+		"/home/madhu/workspace_b2b/goibibo/travelibibo/flight/ticketchanger/views.pyc",
+		"/home/madhu/workspace_b2b/goibibo/travelibibo/settings_citi.py",
+		"/home/madhu/.cache/.fr-0ep5aJ/JetBrains PyCharm Pro 4.5.2 Activate License__12590_il13483.exe",
+		"/home/madhu/Documents/settings.py",
+		"/home/madhu/workspace_b2b/goibibo/travelibibo/settings_b2b.py",
+		"/home/madhu/workspace_b2b/goibibo/travelibibo/setting_mod_citi.py",
+		"/home/madhu/workspace_b2b/goibibo/travelibibo/_settings_goibibo.py",
+		"/home/madhu/.cache/.fr-gqykcM/JetBrains PyCharm Pro 4.5.2 Activate License__12590_il13483.exe",
+		"/home/madhu/workspace_b2b/goibibo/travelibibo/stats/mem_hivestats.py",
+		"/home/madhu/.cache/.fr-s72qV6/templates/index.html",
+		"/home/madhu/workspace_b2b/goibibo/travelibibo/flight/admin.py",
+		"/home/madhu/workspace_b2b/goibibo/gds_link",
+		"/home/madhu/Downloads/goibibo_flight.git/run_citi.py",
+		"/home/madhu/Downloads/goibibo_flight.git/html/templates/v2/common/bookingPageNew.html",
+		"/home/madhu/workspace_b2b/goibibo/travelibibo/mstyleguide/html/RnR/profile.html",
+		"/home/madhu/workspace_b2b/goibibo/travelibibo/html/templates/flight/index.html",
+		"/home/madhu/workspace_b2b/goibibo/travelibibo/html/templates/flight/home.html",
+		"/home/madhu/workspace_b2b/goibibo/travelibibo/html/templates/flight/searchBox.html",
+		"/home/madhu/workspace_b2b/goibibo/travelibibo/html/templates/flight/faq.html",
+		"/home/madhu/workspace_b2b/goibibo/travelibibo/flight/templatetags/travelfilter.py",
+		"/home/madhu/Downloads/pycharm-4.5.4/bin/pycharm.sh"
+	],
+	"find":
+	{
+		"height": 25.0
+	},
+	"find_in_files":
+	{
+		"height": 93.0,
+		"where_history":
+		[
+			"/home/madhu/workspace_b2b/goibibo"
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"gotime",
+			"HOTELS_MONGODB_CONFIG",
+			"email=request.POST.get('email', '')",
+			"firstname",
+			"form",
+			"post",
+			"<button class=\"btn btn-info\" type=\"submit\">",
+			"<button class=\"btn btn-info\" type=\"button\">",
+			"<button class=\"btn btn-info\" type=\"button\"",
+			"form",
+			"schools",
+			"addstudent",
+			"login_required",
+			"login_req",
+			"{{STATIC_URL}}/assets/",
+			"{{STATIC_URL}}/{{STATIC_URL}}/",
+			"/main",
+			"main",
+			"assets/",
+			"kotak",
+			"domain",
+			"STATIC_URL",
+			"username",
+			"activa",
+			"get_object_or_404",
+			"csrf",
+			"loginbtn",
+			"submit",
+			"Enter your email and to receive instructions",
+			"forgot",
+			"form",
+			"asset",
+			"login",
+			"script",
+			"div",
+			"body",
+			"<div class=\"position-relative\">",
+			"ieldset",
+			"</fieldset",
+			"<input type=\"password\" class=\"form-control\" ",
+			"<input type=\"password\" class=\"form-control\" placeholder=\"Password\">",
+			"password",
+			"index",
+			"email_user",
+			"password_reset",
+			"httpre",
+			"login",
+			"login_user",
+			"username is ",
+			"usernamesuggestion",
+			"valid",
+			"'django.core.context_processors.request',",
+			"send_mail",
+			"django.core.context_processors.request",
+			"airlinecharge =",
+			"airlinecharge",
+			"return",
+			"STATIC",
+			"STATIC_URL",
+			"assets/",
+			"assets//",
+			" assets/assets/assets",
+			"{{TEMPLATE_DIRS}}/",
+			"static",
+			"templa",
+			"{{TEMPLATE_DIRS}}",
+			"assets/",
+			"1.6",
+			"stat",
+			"DEBUG",
+			"airline",
+			"resch",
+			"ambig",
+			"ticketch",
+			"airline",
+			"local",
+			"ambig",
+			"{'A': 0, 'I': 0, 'C': 0}",
+			"ambi",
+			"hadoop",
+			"ambig",
+			"am",
+			"ambig",
+			"Appr",
+			"ambi",
+			"getBaggageFee",
+			"getbagg",
+			"carrie",
+			"ambi",
+			"ambig",
+			"ambi",
+			"ambig",
+			"global",
+			"global_charg",
+			"global_charges",
+			"refundable",
+			"Ticketchange ambiguous ",
+			"Ticketchange ambiguous status before hitting API:",
+			"airline paxs dict",
+			"ambigu",
+			"global_ambiguity",
+			"show_credits_refund",
+			"ambigu",
+			"ambiguo",
+			"credits_message",
+			"ambiguous_airline_charges",
+			"ambiguo",
+			"TicketChangeForm context data",
+			"ambiguo",
+			"paxs_to_re",
+			"paxs_to_",
+			"paxs_to_re",
+			"paxs_to_resch",
+			"paxs_to_reschedule",
+			"paxs_to_cancel",
+			"paxs_to_cancel'",
+			"cancel",
+			"ambiguous",
+			"ambig",
+			"This is discount",
+			"This is discounted round trip booking",
+			"ambiguous",
+			"ambiguous status before hitting API",
+			"ambig",
+			"airline paxs dic",
+			"airline paxs dict",
+			"meal_charges",
+			"airline paxs dict"
+		],
+		"highlight": false,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"{{STATIC_URL}}/",
+			"{{STATIC_URL}}/assets/",
+			"return",
+			"airlinecharge = ",
+			"airlinecharge",
+			"{{STATIC_URL}}",
+			"STATIC_URL",
+			"assets/",
+			" ",
+			"{{TEMPLATE_DIRS}}/assets/",
+			"{{TEMPLATE_DIRS}}",
+			",'"
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": false
+	},
+	"groups":
+	[
+		{
+			"sheets":
+			[
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 25.0
+	},
+	"input":
+	{
+		"height": 33.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"pinned_build_system": "Packages/Python/Python.sublime-build",
+	"project": "erpsms.sublime-project",
+	"replace":
+	{
+		"height": 46.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"flight/views",
+				"travelibibo/flight/views.py"
+			],
+			[
+				"view",
+				"travelibibo/flight/views.py"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": false,
+	"side_bar_width": 329.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}

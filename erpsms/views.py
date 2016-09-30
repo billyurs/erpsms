@@ -24,8 +24,8 @@ logger_stats = logging.getLogger('erpsms_stats')
 from django.views.decorators.csrf import csrf_protect
 
 domain = settings.domain
-redisobj = RedisWrapper()
-rediscon = redisobj.getredisconnection()
+from django.core.cache import  get_cache
+rediscon = get_cache('localcache')
 
 def home(request):
     context = RequestContext(request,

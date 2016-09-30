@@ -1,0 +1,16 @@
+diff --git a/api/views.py b/api/views.py
+index 0e7a46b..ab034b1 100644
+--- a/api/views.py
++++ b/api/views.py
+@@ -62,9 +62,10 @@ def getweatherdetailsparser(request):
+                                'lon': city_json.get('coord', {}).get('lon', 0)
+                                }
+                 rediscon.set(city_name, weatherjson)
++                rediscon.set(cache_key, weatherresp)
+                 for weatherdetjson in weatherresp.get('list', []):
+                     weather_server_time = weatherdetjson.get('dt', 0)
+-                    cache_key = city_name + current_time_to_string(weather_server_time)
++                    cache_key = city_name + '_' + current_time_to_string(weather_server_time)
+                     rediscon.set(cache_key, weatherdetjson)
+                 response_to_client = formweatherjson(weatherresp.get('list', ''))
+             else:
